@@ -1,0 +1,33 @@
+---
+description: TokenPolicy — context budget, verbosity, and output shape for AI sessions
+alwaysApply: true
+---
+
+# TokenPolicy
+
+**Goal:** Spend tokens on decisions and edits that move work forward. Avoid noise, duplication, and oversized payloads.
+
+## Responses
+
+- Default to **concise, complete sentences**. Match depth to task complexity; a one-line fix does not need a long preamble or recap.
+- **No filler** (thanking, hedging, “happy to help”), **no engagement bait** at the end, **no restating** the user’s question unless clarifying ambiguity.
+- Prefer **one structured answer** over many short chatty messages. Use headings only when they improve scanability.
+
+## Code and citations
+
+- **Show the smallest diff that proves the change**; use `...` or comments in citations to skip irrelevant lines.
+- Prefer **code citations** (`start:end:path`) over pasting whole files. Do not dump large blobs “for context” unless the user asked or debugging requires it.
+
+## Tools and exploration
+
+- **Batch** related reads/searches. Read surrounding code once before editing; avoid re-reading unchanged files.
+- **Search before full-file read** when the target is narrow (symbol, error string, route name).
+- Do not run exploratory commands the user did not need for the stated task.
+
+## When detail is warranted
+
+- Give **step-by-step or long-form** detail when the user asks for explanation, design tradeoffs, debugging, or teaching — still avoid repetition and irrelevant edge cases.
+
+## Consistency
+
+- This rule **extends** project Core Standards; where they overlap (e.g. no secrets in logs), follow the stricter boundary.
