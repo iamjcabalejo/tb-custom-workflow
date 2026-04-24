@@ -1,14 +1,9 @@
 #!/bin/bash
-# Runs when a new composer session starts.
-# Can inject env vars, additional context, or block session creation.
-# Receives JSON via stdin: {"session_id":"...","is_background_agent":false,...}
-# Output: {"env":{...},"additional_context":"...","continue":true}
-#
-# Ticketboat: inject compounding dev cycle reminder so agents follow
-# Plan → Code → Review/Test → Plan and use plan doc as contract.
+# sessionStart: inject session policy (stdin JSON). stdout: JSON for Cursor.
+# Aligns with: token-policy.mdc, compounding-dev-cycle.mdc, core-standards.mdc
+# — refine → hand off, then compounding; stack rules are additive. See README.
 
-CONTEXT="Ticketboat workflow: Follow Plan → Code → Review/Test → Plan (.cursor/rules/compounding-dev-cycle.mdc). Plan first (feature-plan), then Code to the plan (backend-architect, frontend-architect); Review/Test (backend-reviewer, frontend-reviewer) produces rework list; repeat until production ready. Plan doc is the single source of truth—update it when scope or acceptance criteria change."
+CONTEXT='Ticketboat workflow: Policies in .cursor/rules/ - (1) token-policy.mdc: refine user input, hand off to commands/skills/agents, use internal XML blueprints only for complex/ambiguous/high-stakes work. (2) compounding-dev-cycle.mdc: ASK->PLAN->AGENT, Plan->Code->Review; plan document is the contract. (3) core-standards.mdc: applies with (1)(2); type safety, errors, security boundaries. Product flow: feature-plan -> project-manager; repeat until no Critical rework. Rationale (XML): README (Why XML beats a single prose prompt).'
 
-# Allow session and inject cycle context for handoff-aware behavior
-printf '{"continue":true,"additional_context":"%s"}\n' "$(echo "$CONTEXT" | sed 's/"/\\"/g')"
+printf '{"continue":true,"additional_context":"%s"}\n' "$(printf '%s' "$CONTEXT" | sed 's/\\/\\\\/g; s/"/\\"/g')"
 exit 0

@@ -6,6 +6,8 @@ alwaysApply: false
 
 # API Routes (ASP.NET Core)
 
+*Also applies:* `token-policy.mdc` (agent answers, diffs, tools). This file is HTTP contract only; both apply.
+
 ## Validation
 - Validate all input at the controller/endpoint boundary (model binding, DataAnnotations or FluentValidation).
 - Return 400 Bad Request for validation errors with problem details or field-level details.

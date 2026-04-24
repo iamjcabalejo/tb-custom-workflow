@@ -8,6 +8,8 @@ alwaysApply: false
 
 **Stack:** .NET 8+, ASP.NET Core, C# 12, Entity Framework Core (or Dapper), dependency injection. Tooling: dotnet format, StyleCop/Analyzers or similar; xUnit or NUnit for tests.
 
+*Also applies:* `token-policy.mdc` (answer shape, diffs, tools). This file is stack-only; both apply.
+
 ## Async and I/O
 - Use async/await for all I/O (database, HTTP, file). Prefer `Task`/`ValueTask`; avoid `.Result` or `.Wait()` in async contexts.
 - Pass `CancellationToken` through async APIs; honor cancellation in long-running or external calls.

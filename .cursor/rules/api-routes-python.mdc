@@ -6,6 +6,8 @@ alwaysApply: false
 
 # API Routes (FastAPI)
 
+*Also applies:* `token-policy.mdc` (agent answers, diffs, tools). This file is HTTP contract only; both apply.
+
 ## Validation
 - Validate all input at the route boundary using Pydantic v2 request models (body, query, path).
 - Return 422 for validation errors (FastAPI default); use 400 for bad request when appropriate.

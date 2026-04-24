@@ -8,6 +8,8 @@ alwaysApply: false
 
 **Stack:** Python 3.12+, FastAPI, Pydantic v2, asyncpg, SQLAlchemy 2, httpx, tenacity. Tooling: ruff (lint), black (format), mypy (strict), pytest + pytest-asyncio.
 
+*Also applies:* `token-policy.mdc` (answer shape, diffs, tools). This file is stack-only; both apply.
+
 ## Async-First
 - Use async route handlers and async service functions where I/O is involved.
 - Pass `context.Context`-equivalent (e.g. request context) for cancellation and timeouts where applicable.

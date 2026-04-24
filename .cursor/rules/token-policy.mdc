@@ -1,33 +1,72 @@
 ---
-description: TokenPolicy — context budget, verbosity, and output shape for AI sessions
+description: Refine every workflow-bound prompt first, then hand off; concise sessions, lean diffs, internal XML blueprints for complex work
 alwaysApply: true
 ---
 
 # TokenPolicy
 
-**Goal:** Spend tokens on decisions and edits that move work forward. Avoid noise, duplication, and oversized payloads.
+**Authoritative** for how the agent spends context in this repo. `core-standards.mdc` and `compounding-dev-cycle.mdc` point here; stack rules are additive.
 
-## Responses
+**Goal:** Spend context on actions and decisions. Avoid noise, repeated reads, and oversized replies.
 
-- Default to **concise, complete sentences**. Match depth to task complexity; a one-line fix does not need a long preamble or recap.
-- **No filler** (thanking, hedging, “happy to help”), **no engagement bait** at the end, **no restating** the user’s question unless clarifying ambiguity.
-- Prefer **one structured answer** over many short chatty messages. Use headings only when they improve scanability.
+## Session entry flow: refine, then hand off
 
-## Code and citations
+Use this **before** invoking **commands** (e.g. `feature-plan`, `project-manager`), loading **skills**, or delegating to **agents** for implementation. The first hop turns a raw user message into a **tight spec** so later steps do not waste context rediscovering scope.
 
-- **Show the smallest diff that proves the change**; use `...` or comments in citations to skip irrelevant lines.
-- Prefer **code citations** (`start:end:path`) over pasting whole files. Do not dump large blobs “for context” unless the user asked or debugging requires it.
+1. **Ingest** the user message and any attached context (`@` files, selections).
+2. **Refine** per this file: one clear **objective**, in/out **scope**, **constraints** and **forbidden** where it matters; for complex, ambiguous, or high-stakes work, add a short **internal XML blueprint** (see [Complex work: internal XML blueprint](#complex-work-internal-xml-blueprint)). *Skip* heavy refinement only for trivial, fully specified one-liners.
+3. **Hand off** that refined spec—**not** a meandering restatement—to the right **command**, **skill**, or **agent**. Downstream work should start from a **prompt-shaped** brief so tokens go to **custom implementation** in the product repos, not to re-clarification or filler.
 
-## Tools and exploration
+`compounding-dev-cycle` (ASK → PLAN → AGENT, …) layers on top: **refine** is the **default gate** at session start; mode switching still follows the plan cycle for features.
 
-- **Batch** related reads/searches. Read surrounding code once before editing; avoid re-reading unchanged files.
-- **Search before full-file read** when the target is narrow (symbol, error string, route name).
-- Do not run exploratory commands the user did not need for the stated task.
+## Responses and shape
 
-## When detail is warranted
+- **Concise, complete** sentences; depth matches task size (a one-line fix: no recap or essay).
+- **No filler** (thanking, hedging, “happy to help”), **no engagement bait**, **no restating** the ask unless disambiguation needs it. Open with **substance**, not preamble; drop hedged first lines.
+- **One structured answer** when possible. Headings only if they add scan value.
 
-- Give **step-by-step or long-form** detail when the user asks for explanation, design tradeoffs, debugging, or teaching — still avoid repetition and irrelevant edge cases.
+## Code and repo context
 
-## Consistency
+- **Smallest diff** that proves the change; use `...` in code citations to skip noise.
+- Prefer **code citations** (`start:end:path`) over pasting files; no large dumps unless the user needs them.
+- **Batch** related reads/searches; read surrounding code **once** before edit; don’t re-read unchanged files.
+- **Search** (symbol, error, route) before full-file read when the needle is narrow.
+- No **exploratory** commands the task did not require.
 
-- This rule **extends** project Core Standards; where they overlap (e.g. no secrets in logs), follow the stricter boundary.
+## When to go long
+
+- Step-by-step, tradeoffs, debugging, or teaching **when the user asked**—still skip repetition and irrelevant edge cases.
+
+## Complex work: internal XML blueprint
+
+Use a **tight internal blueprint** (XML tags for the contract—not JSON) only when: multi-step reasoning, unclear scope, many sources, high correctness risk, or the user asked for prompt refinement. **Skip** for obvious one-file/one-symbol tasks (still: no filler, clear output). *Why use XML over a single prose block?* See **README** → [Why XML beats a single prose prompt](#why-xml-beats-a-single-prose-prompt) (this repo’s `README.md`).
+
+**Order:** finish **`<analysis>`** (plan, risks, file touch list) before user-facing prose. **`<output_format>`** must be surgical: section titles, per-section limits, citation rules—not “write a summary.”
+
+**Tags (pick what applies; keep the blueprint short):**
+
+- `<role>` — **Job-style** title, stack, tools, measurable priorities—not “you are an expert.”
+- `<task>` — Single clear deliverable. `<constraints>` / `<forbidden>` — **Hard** limits and **negative** rules (jargon, extra asks, banned paths); boundaries shape quality.
+- `<documents>` — `<document index="n" path="…">` per source; cite by index+path when multiple.
+- `<error_handling>` — Missing data, ambiguity, conflict: state limits, **don’t** invent facts.
+- `<output_format>` — Headers, max bullets/lines, confidence where needed, citation form.
+- `<example>` (few-shot) — **input → analysis chain → output**, not just input → output.
+- Reusable prompt assets: **versioned** in-repo, tagged by use case, sanity-checked on a baseline when stakes are high.
+
+**Check (complex only):** specific `<role>`, at least one real `<forbidden>`, concrete `<output_format>`, multi-source + `<documents>` if needed, `<error_handling>` for unknowns, one short blueprint (not a parallel essay).
+
+**Minimal pattern:**
+
+```xml
+<role>[Title]; [stack]; priorities: [metric], [quality], [security/perf].</role>
+<task>[Outcome]</task>
+<forbidden>[No X, no Y]</forbidden>
+<documents><document index="1" path="[path]">[excerpt or pointer]</document></documents>
+<error_handling>If [gap]: [action]. If [conflict]: [action].</error_handling>
+<analysis>1) … 2) … 3) …</analysis>
+<output_format>## [Section] (max N) … Cite: doc n + path</output_format>
+```
+
+## Precedence
+
+- Extends project Core Standards. If anything conflicts, the **stricter** boundary wins (secrets, PII, safety, repo policy).

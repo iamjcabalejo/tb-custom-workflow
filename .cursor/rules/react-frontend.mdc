@@ -8,6 +8,8 @@ alwaysApply: false
 
 **Stack:** React 18, Vite 6, TypeScript 5, Ant Design 5, Jotai (global state), TanStack React Query (server state), axios, styled-components, zod. Package manager: pnpm. Testing: Vitest, React Testing Library.
 
+*Also applies:* `token-policy.mdc` (answer shape, diffs, tools). This file is stack-only; both apply.
+
 ## Component Structure
 - Use functional components and hooks; avoid class components for new code.
 - Keep components under ~100 lines; extract subcomponents or custom hooks when larger.

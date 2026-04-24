@@ -10,6 +10,7 @@ You MUST run this command in **Plan mode**. Do not implement code, create applic
 
 ## Rules to follow
 
+- **Token policy:** Apply `.cursor/rules/token-policy.mdc` first—**refine** the user’s feature request into a tight plan brief (Session entry flow), then author the plan doc; no filler.
 - **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc` (scope, acceptance criteria, technical approach, task list; handoff rule: plan complete when another agent can implement without guessing).
 - **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; your output feeds the next phase (project-manager runs Code in Agent mode, then Review/Test in Ask mode).
 - **Feature-planning skill:** Apply `.cursor/skills/feature-planning/SKILL.md` so the plan includes all required sections for project-manager.
