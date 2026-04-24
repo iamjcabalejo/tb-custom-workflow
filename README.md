@@ -41,7 +41,6 @@ flowchart TD
 | **api-test** | — | Add or run API tests (pytest for Python). |
 | **code-cleanup** | — | Lint/format (ruff, black, mypy for Python; ESLint, Prettier for TS). |
 | **code-optimize** | — | Performance and structure (async, caching, bundle). |
-| **commit-best** | — | Conventional commits; Bitbucket-aware. |
 | **new-task** | — | Start a new task from a plan or ticket. |
 
 ## Agents
