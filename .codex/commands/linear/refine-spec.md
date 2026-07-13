@@ -4,7 +4,7 @@ description: Plan mode — fetch a Linear issue, refine its spec per token-polic
 
 **Scope:** Refine a **Linear ticket** into a **prompt-shaped spec** so developers and implementation agents do not burn context re-deriving scope. This is the **planning** step where missing requirements, acceptance criteria, constraints, and out-of-scope boundaries belong.
 
-## Cursor mode: Plan mode only (strict)
+## Plan mode only (strict)
 
 You MUST run this command in **Plan mode** only. **Forbidden:** application code changes, new implementation files, refactors, running builds, tests, or install commands, or "quick fixes" in product repos. Updating the Linear issue (description, optional title) via MCP is **allowed**—that is spec work, not product implementation.
 
@@ -12,12 +12,12 @@ If the user asks you to implement or edit code, decline and point them to **proj
 
 ## Token policy (mandatory)
 
-Apply **`.cursor/rules/token-policy.mdc`** before you write the final spec:
+Apply **`.codex/rules/token-policy.mdc`** before you write the final spec:
 
 1. **Ingest** the issue: title, description, relations, and comments.
 2. **Refine** into: one clear **objective**; **in / out of scope**; **constraints** and **forbidden** (negative rules) where they matter; testable **acceptance criteria**; **assumptions** only when you must ship a draft and ambiguity remains.
 3. For **complex, ambiguous, or high-stakes** work, add a short **internal XML blueprint** (per token-policy: `<role>`, `<task>`, `<forbidden>`, `<error_handling>`, `<output_format>`, optional `<analysis>`) — see **“Issue body structure”** below. Skip the XML block only for trivial, fully specified one-line tickets.
-4. **Hand off** in the issue body: the refined spec must be **scannable** (headings, lists) and **copy-pastable** into **linear/apply-ticket**, **feature-plan**, or **project-manager** without a second clarification round.
+4. **Hand off** in the issue body: the refined spec must be **scannable** (headings, lists) and **copy-pastable** into **linear/task**, **feature-plan**, or **project-manager** without a second clarification round.
 
 **Responses in chat:** concise, no filler, no engagement bait. Match effort to ticket size; one-line tickets get a light touch.
 
@@ -86,11 +86,11 @@ Use this order so humans and **AI** can parse the ticket reliably:
 
 ## Handoff (chat, closing lines)
 
-- Tell the user the ticket is ready for **linear/apply-ticket** (read ticket → plan → code → review) or **feature-plan** / **project-manager** when a repo plan file is also needed without fetching from Linear again.
+- Tell the user the ticket is ready for **linear/task** (implementation plan) or **feature-plan** / **project-manager** when a repo plan file is also needed.
 - If an XML block was added, state that it is for **downstream agent prompts** and matches **token-policy**.
 
 ## Cross-command relationship
 
 - **create-ticket** — file new work.
 - **refine-ticket** (this) — **spec quality gate**; align description with token-policy before heavy planning.
-- **linear/apply-ticket** — read ticket, author repo plan, run Code → Review/Test (Linear unchanged).
+- **linear/task** — detailed plan from an already well-shaped ticket.

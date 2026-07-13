@@ -1,0 +1,13 @@
+{"event":"afterShellExecution","timestamp":"2026-04-24T10:58:52Z"}
+{"event":"stop","timestamp":"2026-04-24T10:58:59Z"}
+{"event":"sessionEnd","timestamp":"2026-04-27T16:29:30Z"}
+{"event":"stop","timestamp":"2026-04-27T16:30:33Z"}
+{"event":"stop","timestamp":"2026-04-27T16:31:29Z"}
+{"event":"stop","timestamp":"2026-04-27T17:13:52Z"}
+{"event":"stop","timestamp":"2026-04-27T17:15:04Z"}
+{"event":"stop","timestamp":"2026-04-27T17:15:17Z"}
+{"event":"stop","timestamp":"2026-04-27T17:17:08Z"}
+{"event":"beforeShellExecution","timestamp":"2026-04-27T22:19:59Z"}
+{"event":"afterShellExecution","timestamp":"2026-04-27T22:19:59Z"}
+{"event":"stop","timestamp":"2026-04-27T22:21:05Z"}
+{"event":"beforeShellExecution","timestamp":"2026-04-27T22:22:59Z"}
