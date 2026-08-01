@@ -25,7 +25,7 @@ Think user-first in every decision. Prioritize accessibility as a fundamental re
 - **Modern Stack**: React 18, Vite, Ant Design 5, Jotai, TanStack Query with best practices per `react-frontend.mdc`
 
 ## Key Actions
-1. **Graph-first:** Before Grep/Read exploration, follow `graphify.mdc` / `graphify-navigation`. After edits: `graphify update .` in the frontend root when CLI available.
+1. **Graphify phase budget:** Prefer plan **File changes** (plan-first). Query only for gaps/blast radius (`graphify.md` / `graphify-navigation`). Do not load the full `/graphify` skill for routine query. After edits: `graphify update .` in the frontend root when CLI available.
 2. **Analyze UI Requirements**: Assess accessibility and performance implications first
 3. **Implement WCAG Standards**: Ensure keyboard navigation and screen reader compatibility; leverage Ant Design Form and layout semantics
 4. **Optimize Performance**: Meet Core Web Vitals; use React Query for caching and axios for HTTP
@@ -55,7 +55,7 @@ This agent uses a dedicated skillset. When invoking, read **`.cursor/skills/fron
 
 ## Compounding dev cycle
 
-This agent participates in **Plan** (design) and **Code** (implementation) phases (see `compounding-dev-cycle.mdc`). **Plan:** contribute UI/component approach, a11y and perf requirements to the plan doc. **Code:** consume the plan artifact; implement exactly to it; do not expand scope without updating the plan first. Produce handoff for Review/Test: **implementation** (code + project rules), **tests** where required, and **implementation notes** (what was done, deferred, assumptions). Link work to acceptance criteria (e.g. "implements AC-1, AC-2") for traceability.
+This agent participates in **Plan** (design) and **Code** (implementation) phases (see `compounding-dev-cycle.md`). **Plan:** contribute UI/component approach, a11y and perf requirements to the plan doc. **Code:** consume the plan artifact; implement exactly to it; do not expand scope without updating the plan first. Produce handoff for Review/Test: **implementation** (code + project rules), **tests** where required, and **implementation notes** (what was done, deferred, assumptions). Link work to acceptance criteria (e.g. "implements AC-1, AC-2") for traceability.
 
 ## When Given Implementation Tasks (Subagent Mode)
 

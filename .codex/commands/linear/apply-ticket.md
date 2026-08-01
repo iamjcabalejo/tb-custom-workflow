@@ -2,7 +2,7 @@
 description: Fetch a Linear issue (read-only), plan from the ticket, then run Plan → Code → Review/Test via backend/frontend agents. Does not mutate Linear.
 ---
 
-You are the **linear/apply-ticket** orchestrator. Fetch **one Linear issue**, turn it into a repo plan, then execute the **compounding development cycle** per **`.cursor/rules/compounding-dev-cycle.mdc`**, **`.cursor/rules/token-policy.mdc`**, **`.cursor/rules/graphify.mdc`** (phase budget), **`.cursor/skills/project-manager/SKILL.md`**, and **`.cursor/skills/agent-selection/SKILL.md`**.
+You are the **linear/apply-ticket** orchestrator. Fetch **one Linear issue**, turn it into a repo plan, then execute the **compounding development cycle** per **`.codex/rules/compounding-dev-cycle.md`**, **`.codex/rules/token-policy.md`**, **`.codex/rules/graphify.md`** (phase budget), **`.codex/skills/project-manager/SKILL.md`**, and **`.codex/skills/agent-selection/SKILL.md`**.
 
 **Scope:** Read ticket → plan → implement → review. **Forbidden:** any write to Linear (no `save_issue`, `save_comment`, status/label/assignee changes, or other mutation tools). **Allowed:** repo plan files, application code, tests, rework plans under `docs/plans/`.
 
@@ -31,7 +31,7 @@ Use the **Linear** MCP; do not invent ticket content from memory.
 
 ## Token policy (mandatory)
 
-Apply **`.cursor/rules/token-policy.mdc`** Session entry flow before planning or delegating:
+Apply **`.codex/rules/token-policy.md`** Session entry flow before planning or delegating:
 
 1. **Ingest** title, description, relations, comments.
 2. **Refine** into: one **objective**; **in / out of scope**; **constraints** and **forbidden**; numbered **acceptance criteria** (AC-1, AC-2, …); **assumptions** only when the ticket is thin but unblocking.
@@ -50,7 +50,7 @@ Apply **`.cursor/rules/token-policy.mdc`** Session entry flow before planning or
 
 ## Graphify phase budget
 
-Follow **`.cursor/rules/graphify.mdc`** / **`.cursor/skills/graphify-navigation/SKILL.md`**:
+Follow **`.codex/rules/graphify.md`** / **`.codex/skills/graphify-navigation/SKILL.md`**:
 
 | Phase | Action |
 |-------|--------|
@@ -79,7 +79,7 @@ If only **mildly** thin, add a short **Assumptions** subsection in the plan and 
 
 1. Derive **feature slug**: lowercase, hyphenated, prefixed with ticket key when helpful (e.g. `tb-42-user-profile-export`). Plan path: **`docs/plans/<feature-slug>.md`**.
 2. Orient with graphify (phase budget) before Grep/Read for file mapping.
-3. Write the plan using **all required sections** from **`.cursor/commands/misc/feature-plan.md`** and **`.cursor/skills/feature-planning/SKILL.md`**:
+3. Write the plan using **all required sections** from **`.codex/commands/misc/feature-plan.md`** and **`.codex/skills/feature-planning/SKILL.md`**:
    - Scope / Metadata, Feature Overview, Acceptance criteria, Technical design
    - **Backend tasks** and/or **C# Backend tasks** and/or **Frontend tasks** — include only what the ticket requires
    - Integration & testing, File changes, Dependencies / env
@@ -99,11 +99,11 @@ Spawn **only** agents needed per the plan. Pass: **plan path** (or relevant sect
 
 ### A1. `backend-architect` (when plan has Backend or C# Backend tasks)
 
-**Instruct:** "Follow graphify.mdc phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all backend tasks from this plan per compounding-dev-cycle Code phase. Auto-select Python (FastAPI, Pydantic, SQLAlchemy/asyncpg; python-backend.mdc, api-routes-python.mdc) or C# (ASP.NET Core; csharp-backend.mdc, api-routes-csharp.mdc) from the plan. After edits: `graphify update .` when CLI available. Produce: code + tests + implementation notes (Done, Deferred, Assumptions, Env/config). Map work to AC-n. Do not expand scope."
+**Instruct:** "Follow graphify.md phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all backend tasks from this plan per compounding-dev-cycle Code phase. Auto-select Python (FastAPI, Pydantic, SQLAlchemy/asyncpg; python-backend.mdc, api-routes-python.mdc) or C# (ASP.NET Core; csharp-backend.mdc, api-routes-csharp.mdc) from the plan. After edits: `graphify update .` when CLI available. Produce: code + tests + implementation notes (Done, Deferred, Assumptions, Env/config). Map work to AC-n. Do not expand scope."
 
 ### A2. `frontend-architect` (when plan has Frontend tasks)
 
-**Instruct:** "Follow graphify.mdc phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all frontend tasks from this plan per compounding-dev-cycle Code phase. React, Ant Design, Jotai, TanStack Query. After edits: `graphify update .` when CLI available. Produce: code + tests where relevant + implementation notes. Map work to AC-n. Do not expand scope."
+**Instruct:** "Follow graphify.md phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all frontend tasks from this plan per compounding-dev-cycle Code phase. React, Ant Design, Jotai, TanStack Query. After edits: `graphify update .` when CLI available. Produce: code + tests where relevant + implementation notes. Map work to AC-n. Do not expand scope."
 
 **Order:** backend-architect → frontend-architect when both apply (API contract first).
 
@@ -117,11 +117,11 @@ Spawn reviewers **only** for domains that were implemented. Pass plan AC + diff 
 
 ### B1. `backend-reviewer` (if backend changed)
 
-**Instruct:** "Follow graphify.mdc phase budget: **diff-first**; query only for dependency/blast radius. Review backend implementation against this plan per compounding-dev-cycle Review/Test. Auto-select Python or C# per file. Produce: (1) review summary, (2) rework list with severity—Critical, Suggestion, Nice to have, (3) test status. Be specific: file/line + required change. Do not apply fixes."
+**Instruct:** "Follow graphify.md phase budget: **diff-first**; query only for dependency/blast radius. Review backend implementation against this plan per compounding-dev-cycle Review/Test. Auto-select Python or C# per file. Produce: (1) review summary, (2) rework list with severity—Critical, Suggestion, Nice to have, (3) test status. Be specific: file/line + required change. Do not apply fixes."
 
 ### B2. `frontend-reviewer` (if frontend changed)
 
-**Instruct:** "Follow graphify.mdc phase budget: **diff-first**; query only for dependency/blast radius. Review frontend implementation against this plan per compounding-dev-cycle Review/Test. Produce: (1) review summary, (2) rework list with severity, (3) test status. Be specific. Do not apply fixes."
+**Instruct:** "Follow graphify.md phase budget: **diff-first**; query only for dependency/blast radius. Review frontend implementation against this plan per compounding-dev-cycle Review/Test. Produce: (1) review summary, (2) rework list with severity, (3) test status. Be specific. Do not apply fixes."
 
 **Gates:** AC covered by tests; no project-rule violations; no unresolved high-severity security or data-integrity issues.
 

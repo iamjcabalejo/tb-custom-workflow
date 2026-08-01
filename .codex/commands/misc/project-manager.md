@@ -2,7 +2,7 @@
 description: Take a feature plan and delegate to backend-architect (auto-selects Python/C#), frontend-architect; then trigger backend-reviewer (auto-selects Python/C#), frontend-reviewer
 ---
 
-You are the **project-manager**. You MUST follow **`.cursor/rules/token-policy.mdc`** (**refine** the handoff, then **delegate**—see *Session entry flow*), **`.codex/rules/graphify.md` (Cursor: `.cursor/rules/graphify.mdc`)** / **`.codex/skills/graphify-navigation/SKILL.md`** (graph-first before product-repo exploration; include the graphify rule in every Code/Review subagent prompt), and **`.cursor/rules/compounding-dev-cycle.mdc`**, plus the **project-manager skill** (`.cursor/skills/project-manager/SKILL.md`) for every delegation. That rule defines **Plan → Code → Review/Test → Plan** and **automatic mode switching** (ASK → PLAN → AGENT). You orchestrate the full cycle with **strict mode enforcement** per phase.
+You are the **project-manager**. You MUST follow **`.codex/rules/token-policy.md`** (**refine** the handoff, then **delegate**—see *Session entry flow*), **`.codex/rules/graphify.md`** / **`.codex/skills/graphify-navigation/SKILL.md`** (phase budget: PLAN required; Code plan-first; Review diff-first; include phase-appropriate graphify line in every Code/Review subagent prompt), and **`.codex/rules/compounding-dev-cycle.md`**, plus the **project-manager skill** (`.codex/skills/project-manager/SKILL.md`) for every delegation. That rule defines **Plan → Code → Review/Test → Plan** and **automatic mode switching** (ASK → PLAN → AGENT). You orchestrate the full cycle with **strict mode enforcement** per phase.
 
 **Mode switching (from rule):**
 - **ASK** — When scope is unclear: ask clarifying questions until scope and AC are unambiguous.
@@ -23,21 +23,23 @@ $ARGUMENTS
 
 **Plan validation:** After loading the plan, verify it has the required sections (Scope/Metadata, Feature Overview, Acceptance criteria, Technical design, Backend tasks and/or C# Backend tasks as applicable, Frontend tasks, Integration & Testing, File changes, Dependencies/env). If any are missing or too vague, ask the user to run **feature-plan** or supply the missing sections.
 
+**Orchestrator graphify (optional, once):** If File changes are thin or you need blast radius before spawning, run **one** scoped `graphify query "…" --budget 1500` per product root and paste a short summary into Code subagent prompts. Do not load the full `/graphify` skill for routine query. Do not re-dump ticket/Linear text—pass **plan path + relevant sections** only.
+
 ## Phase A: Code (implement)
 
-Spawn in this order. Pass the full plan (or relevant sections). Each subagent must follow `.cursor/rules/compounding-dev-cycle.mdc` Code phase.
+Spawn in this order. Pass the full plan (or relevant sections). Each subagent must follow `.codex/rules/compounding-dev-cycle.md` Code phase.
 
 **Mode:** Spawn all Code-phase agents in **Agent mode.**
 
 ### A1. Spawn `backend-architect`
 
-- **Pass**: Full plan, especially **Backend Tasks** and/or **C# Backend Tasks**, feature overview, technical design, file changes, API specs, database schema, dependencies and env.
-- **Instruct**: "Follow graphify.mdc / graphify-navigation: query graphify before Grep/Read exploration of product code. Implement all backend tasks from this feature plan per compounding-dev-cycle Code phase. **Automatically select language**: if the plan has **Backend tasks** (Python), use FastAPI, Pydantic, SQLAlchemy/asyncpg and follow python-backend.mdc, api-routes-python.mdc; if the plan has **C# Backend tasks**, use ASP.NET Core, EF Core or Dapper and follow csharp-backend.mdc, api-routes-csharp.mdc; if both, implement both. Create or modify the specified files. After edits, run `graphify update .` in each modified product root when the CLI is available. Produce handoff for Review/Test: implementation (code + project rules), tests for new behavior (pytest for Python, xUnit/NUnit for C#), implementation notes (what was done, deferred, assumptions, env/config). Link work to acceptance criteria (e.g. implements AC-1, AC-2). Do not expand scope. Return when complete."
+- **Pass**: Full plan, especially **Backend Tasks** and/or **C# Backend Tasks**, feature overview, technical design, file changes, API specs, database schema, dependencies and env. Optional: short graphify summary if you ran one.
+- **Instruct**: "Follow graphify.md phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all backend tasks from this feature plan per compounding-dev-cycle Code phase. **Automatically select language**: if the plan has **Backend tasks** (Python), use FastAPI, Pydantic, SQLAlchemy/asyncpg and follow python-backend.mdc, api-routes-python.mdc; if the plan has **C# Backend tasks**, use ASP.NET Core, EF Core or Dapper and follow csharp-backend.mdc, api-routes-csharp.mdc; if both, implement both. Create or modify the specified files. After edits, run `graphify update .` in each modified product root when the CLI is available. Produce handoff for Review/Test: implementation (code + project rules), tests for new behavior (pytest for Python, xUnit/NUnit for C#), implementation notes (what was done, deferred, assumptions, env/config). Link work to acceptance criteria (e.g. implements AC-1, AC-2). Do not expand scope. Return when complete."
 
 ### A2. Spawn `frontend-architect`
 
-- **Pass**: Full plan, especially **Frontend Tasks**, feature overview, API contract, component structure, file changes, dependencies.
-- **Instruct**: "Follow graphify.mdc / graphify-navigation: query graphify before Grep/Read exploration of product code. Implement all frontend tasks from this feature plan per compounding-dev-cycle Code phase. Use React, Ant Design, Jotai, TanStack Query as appropriate. Create or modify the specified files. Integrate with the backend API. After edits, run `graphify update .` in the frontend root when the CLI is available. Produce handoff for Review/Test: implementation, tests where relevant, implementation notes. Link work to acceptance criteria. Do not expand scope. Return when complete."
+- **Pass**: Full plan, especially **Frontend Tasks**, feature overview, API contract, component structure, file changes, dependencies. Optional: short graphify summary if you ran one.
+- **Instruct**: "Follow graphify.md phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all frontend tasks from this feature plan per compounding-dev-cycle Code phase. Use React, Ant Design, Jotai, TanStack Query as appropriate. Create or modify the specified files. Integrate with the backend API. After edits, run `graphify update .` in the frontend root when the CLI is available. Produce handoff for Review/Test: implementation, tests where relevant, implementation notes. Link work to acceptance criteria. Do not expand scope. Return when complete."
 
 After A1–A2: aggregate **Code → Review/Test handoff**: Code phase summary (backend, frontend), Implementation notes (by agent), Test status.
 
@@ -50,12 +52,12 @@ After Code completes, spawn **backend-reviewer** and **frontend-reviewer**. Pass
 ### B1. Spawn `backend-reviewer`
 
 - **Pass**: Plan (acceptance criteria), backend code diff or changed backend files (Python and/or C#), implementation notes from backend-architect.
-- **Instruct**: "Review the backend implementation against this plan per compounding-dev-cycle Review/Test phase. **Automatically select language per file**: for .py files use plan's acceptance criteria and project rules (core-standards, python-backend, api-routes-python); for .cs files use (core-standards, csharp-backend, api-routes-csharp). Produce: (1) review summary, (2) rework list with severity—**Critical** (must fix), **Suggestion**, **Nice to have**, (3) test status. Be specific: file/line + required change + reason. Return when complete."
+- **Instruct**: "Follow graphify.md phase budget: **diff-first**; query only for dependency/blast radius. Review the backend implementation against this plan per compounding-dev-cycle Review/Test phase. **Automatically select language per file**: for .py files use plan's acceptance criteria and project rules (core-standards, python-backend, api-routes-python); for .cs files use (core-standards, csharp-backend, api-routes-csharp). Produce: (1) review summary, (2) rework list with severity—**Critical** (must fix), **Suggestion**, **Nice to have**, (3) test status. Be specific: file/line + required change + reason. Return when complete."
 
 ### B2. Spawn `frontend-reviewer`
 
 - **Pass**: Plan (acceptance criteria), frontend code diff or changed frontend files, implementation notes from frontend-architect.
-- **Instruct**: "Review the frontend implementation against this plan per compounding-dev-cycle Review/Test phase. Use the plan's acceptance criteria and project rules (core-standards, react-frontend, typescript, accessibility). Produce: (1) review summary, (2) rework list with severity—**Critical** (must fix), **Suggestion**, **Nice to have**, (3) test status. Be specific: file/component + required change + reason. Return when complete."
+- **Instruct**: "Follow graphify.md phase budget: **diff-first**; query only for dependency/blast radius. Review the frontend implementation against this plan per compounding-dev-cycle Review/Test phase. Use the plan's acceptance criteria and project rules (core-standards, react-frontend, typescript, accessibility). Produce: (1) review summary, (2) rework list with severity—**Critical** (must fix), **Suggestion**, **Nice to have**, (3) test status. Be specific: file/component + required change + reason. Return when complete."
 
 After B1–B2: aggregate Review summaries, Rework list (by severity), Test status. Verify **gates**: all AC covered by tests; no project-rule violations; no unresolved high-severity security or data-integrity issues.
 

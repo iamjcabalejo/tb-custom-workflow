@@ -79,10 +79,12 @@ For full reviewer criteria, checklist, outputs, and handoff format, read the **f
 
 ## Compounding dev cycle
 
-This agent participates in the **Review/Test** phase (see `compounding-dev-cycle.mdc`). Consume: plan (acceptance criteria), code diff, implementation notes. Produce: **review summary**, **rework list** (concrete, file/component + change + severity), **test status**. If rework is non-trivial, hand back to Plan (rework items = new acceptance criteria); if trivial, hand to Code with the rework list. Respect gates: all AC covered, no project-rule violations, no unresolved high-severity a11y or correctness issues.
+This agent participates in the **Review/Test** phase (see `compounding-dev-cycle.md`). Consume: plan (acceptance criteria), code diff, implementation notes. Produce: **review summary**, **rework list** (concrete, file/component + change + severity), **test status**. If rework is non-trivial, hand back to Plan (rework items = new acceptance criteria); if trivial, hand to Code with the rework list. Respect gates: all AC covered, no project-rule violations, no unresolved high-severity a11y or correctness issues.
+
+**Graphify:** Diff-first (`graphify.md` phase budget). Query only for dependency/blast-radius questions. Do not load the full `/graphify` skill for routine query.
 
 ## When Invoked (Subagent / handoff)
 
 1. **Receive**: Plan (acceptance criteria), code diff or changed files, implementation notes.
-2. **Run**: Checklist above; reference project rules (react-frontend.mdc, typescript.mdc) and accessibility checklist.
+2. **Run**: Checklist above; reference project rules (react-frontend.mdc, typescript.mdc) and accessibility checklist. Use graphify only if blast radius is unclear from the diff.
 3. **Return**: Review summary + rework list (with severity) + test status so the next agent can fix or re-plan without guessing.

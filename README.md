@@ -14,9 +14,9 @@ Refining first produces a **short, unambiguous** brief (and an internal **XML bl
 
 | Piece | Role |
 |-------|------|
-| `.cursor/rules/graphify.mdc` (`alwaysApply`) | Mandatory: `graphify query` / `path` / `explain` before Grep/Read exploration |
-| `.cursor/skills/graphify-navigation/` | Ticketboat multi-root graph gate for commands |
-| `.agents/skills/graphify/` (also under `.cursor/skills/graphify/`) | Official `/graphify` build/update skill |
+| `.cursor/rules/graphify.mdc` (`alwaysApply`) | Phase budget: PLAN required; Code plan-first; Review diff-first |
+| `.cursor/skills/graphify-navigation/` | Ticketboat multi-root graph gate (CLI query; not full skill) |
+| `.agents/skills/graphify/` (also under `.cursor/skills/graphify/`) | Official `/graphify` **build/update/wiki** only |
 | `AGENTS.md` | Codex always-on graph guidance |
 
 **One-time (each developer machine):**
@@ -45,18 +45,19 @@ Unstructured text mixes **role, task, constraints, and output** in one stream, s
 flowchart TD
   U[User prompt] --> R[Refine per token-policy]
   R --> H[Handoff brief]
-  H --> G[Graphify query in product root]
-  G --> C[Commands e.g. feature-plan, project-manager]
-  G --> S[Skills e.g. feature-planning, backend-architect]
-  G --> A[Agents e.g. backend-architect, frontend-reviewer]
-  C --> I[Custom implementation in product repositories]
-  S --> I
-  A --> I
+  H --> P[PLAN chat: feature-plan or apply-ticket]
+  P --> G[Graphify query --budget 1500]
+  G --> PlanDoc[docs/plans/feature.md with File changes]
+  PlanDoc --> C[CODE chat: project-manager + plan path]
+  C --> PF[Code plan-first / Review diff-first]
+  PF --> I[Custom implementation in product repositories]
 ```
+
+**Context tip:** For large tickets, finish PLAN in one chat, then run `/project-manager docs/plans/…` in a **new** chat so Conversation tokens do not stack Linear + plan + Code + Review.
 
 ## Development cycle
 
-**Plan → Code → Review/Test → Plan** (see `.cursor/rules/compounding-dev-cycle.mdc`). A **refine-then-hand-off** step (above) comes **before** mode switching. Modes: **ASK** (discovery), **PLAN** (author plan), **AGENT** (implement or review). No implementation until the plan is complete; reviewers produce rework lists; Critical rework feeds back into Plan then Code.
+**Plan → Code → Review/Test → Plan** (see `.cursor/rules/compounding-dev-cycle.mdc`). A **refine-then-hand-off** step (above) comes **before** mode switching. Modes: **ASK** (discovery), **PLAN** (author plan), **AGENT** (implement or review). **Graphify phase budget** (`graphify.mdc`): PLAN required; Code plan-first; Review diff-first. No implementation until the plan is complete; reviewers produce rework lists; Critical rework feeds back into Plan then Code.
 
 ## Commands
 
@@ -88,7 +89,7 @@ One backend command covers both Python and C#; no separate backend agents per la
 
 ## Rules (summary)
 
-- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed; graph-first for product repos), `compounding-dev-cycle.mdc`, `core-standards.mdc`, `graphify.mdc` (query graph before Grep/Read exploration).
+- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed), `compounding-dev-cycle.mdc`, `core-standards.mdc`, `graphify.mdc` (phase budget: PLAN / Code / Review).
 - **Glob-based:** `python-backend.mdc` (`**/*.py`), `api-routes-python.mdc` (`**/api/**/*.py`), `csharp-backend.mdc` (`**/*.cs`), `api-routes-csharp.mdc` (`**/Controllers/**/*.cs`), `react-frontend.mdc` (`**/*.tsx`), `typescript.mdc` (`**/*.ts`).
 
 ## Skills
@@ -112,8 +113,8 @@ Shared: `api-design-patterns`, `api-testing`, `postgresql`, `security-audit`, `c
 1. Include this repo in your Cursor multi-root workspace with `admin-frontend`, `admin-api-python`, and/or `admin-api-csharp`.
 2. Install Graphify CLI (`uv tool install graphifyy`) and build a graph once per product repo (`graphify extract . --code-only`).
 3. **Refine and route:** turn the user ask into a tight brief (`token-policy`), then pick **feature-plan** / **project-manager** / agents as needed.
-4. **Plan:** Set chat to **Plan** mode, then run **feature-plan** with a feature name/slug → produces `docs/plans/<feature>.md` (agents query the graph before exploring).
-5. **Execute:** Run **project-manager** with the plan path → backend-architect (auto-selects Python/C#), frontend-architect, then backend-reviewer and frontend-reviewer.
+4. **Plan:** Set chat to **Plan** mode, then run **feature-plan** (or **apply-ticket**) → `docs/plans/<feature>.md` with concrete File changes (graphify query in PLAN).
+5. **Execute:** Prefer a **new** chat for large work: run **project-manager** with the plan path → Code (plan-first) → Review (diff-first).
 6. Resolve Critical rework via Plan (rework AC) → Code → Review until production ready.
 
 ## Stacks

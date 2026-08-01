@@ -11,7 +11,7 @@ When this skill is used (including by the **feature-plan** command), work MUST b
 
 ## Rules to follow
 
-- **Graph-first:** Before exploring product repos for technical design or file mapping, apply `.cursor/rules/graphify.mdc` and `.cursor/skills/graphify-navigation/SKILL.md`.
+- **Graph-first (PLAN phase):** Before exploring product repos for technical design or file mapping, apply `.cursor/rules/graphify.mdc` phase budget and `.cursor/skills/graphify-navigation/SKILL.md` (`query --budget 1500` / path / explain). Write concrete **File changes**.
 - **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc`: goal = unambiguous scope, acceptance criteria, technical approach; artifact = single plan doc; handoff rule = plan complete when another agent can implement without guessing.
 - **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; plan output feeds project-manager for Code (Agent mode) and Review/Test (Ask mode).
 

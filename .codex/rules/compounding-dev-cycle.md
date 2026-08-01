@@ -74,13 +74,13 @@ Each mode has distinct responsibilities and output expectations.
 
 **Modes:** When scope is unclear, run **ASK** (Plan discovery) first; then **PLAN** (Plan authoring). When the user request already has clear scope and AC, go directly to **PLAN**.
 
-**Inputs:** User request, existing codebase (orient via **graphify** per `graphify.mdc` / `graphify-navigation` before Grep/Read), constraints (deadlines, stack, standards).
+**Inputs:** User request, existing codebase (orient via **graphify** per `graphify.md` **phase budget**: PLAN = required query before Grep/Read; write concrete paths into **File changes**), constraints (deadlines, stack, standards).
 
 **Outputs (handoff to Code):**
 - **Scope:** What is in/out; dependencies and boundaries.
 - **Acceptance criteria:** Testable conditions (Given/When/Then or checklist).
 - **Technical approach:** Key components, APIs, data shapes; references to existing rules (e.g. `core-standards.mdc`, `api-routes.mdc`). Cite graph-derived file/symbol targets when available.
-- **Task list:** Ordered implementation steps; optional rough file/area mapping.
+- **Task list:** Ordered implementation steps; **File changes** with concrete create/modify paths (Code is plan-first).
 
 **Artifact:** Prefer a single plan doc (e.g. `docs/plans/<feature>.md` or ticket) that Code can open and follow. Use `feature-plan` to produce the plan file; use `project-manager` with that plan to run the full cycle (Code → Review/Test → Plan if needed → repeat until production ready).
 
@@ -96,7 +96,7 @@ Each mode has distinct responsibilities and output expectations.
 
 **Mode:** **AGENT** (Execute). No planning or discovery; implement only to the plan artifact.
 
-**Inputs:** Plan artifact, project rules (core-standards, api-routes, typescript, react), existing code.
+**Inputs:** Plan artifact (path + AC + File changes), project rules (core-standards, api-routes, typescript, react), existing code. **Graphify:** plan-first—Read listed files; query only for gaps/blast radius (`graphify.md` phase budget). Orchestrators may pass one short subgraph summary instead of each agent re-querying.
 
 **Outputs (handoff to Review/Test):**
 - **Implementation:** Code that satisfies acceptance criteria and project standards.
@@ -107,7 +107,7 @@ Each mode has distinct responsibilities and output expectations.
   - **Assumptions:** Any assumptions about environment, dependencies, or behavior.
   - **Env/config:** Required env vars, config changes, or setup steps.
 
-**Discipline:** Do not expand scope beyond the plan without updating the plan first. If the plan is wrong, note it and either adjust the plan doc or hand back to Plan for a quick revision.
+**Discipline:** Do not expand scope beyond the plan without updating the plan first. If the plan is wrong, note it and either adjust the plan doc or hand back to Plan for a quick revision. After substantive edits: `graphify update .` in each modified product root when CLI available.
 
 **Agents:** backend-architect, frontend-architect, database-expert, or general implementation. Match agent to the changed areas.
 
@@ -121,7 +121,7 @@ Each mode has distinct responsibilities and output expectations.
 
 **Mode:** **AGENT** (Review/Test). Read-only review output (rework list, summary); do not apply changes unless explicitly asked.
 
-**Inputs:** Plan (acceptance criteria), code diff, implementation notes, test results.
+**Inputs:** Plan (acceptance criteria), code diff, implementation notes, test results. **Graphify:** diff-first—query only for dependency/blast-radius questions (`graphify.md` phase budget).
 
 **Outputs (handoff to Plan or Code):**
 - **Review summary:** Alignment with plan, adherence to core-standards and api-routes, security and performance notes. Keep it **tight and scannable** (`token-policy.mdc`—smallest text that still enables a fix).
@@ -151,6 +151,8 @@ Each mode has distinct responsibilities and output expectations.
 ## Cross-phase standards
 
 - **Token budget and agent communication:** `token-policy.mdc` applies to **all phases** (ASK/PLAN/AGENT): concise answers, no filler, lean diffs, batched tools, and XML task blueprints when work is complex or high-stakes.
+- **Graphify phase budget:** `graphify.md` — PLAN required; Code plan-first; Review diff-first; `graphify update .` after edits. Do not load the full `/graphify` skill for routine query/path/explain.
+- **Context hygiene:** Prefer writing the plan to `docs/plans/…` then handing **plan path + AC** to Code (new chat for large tickets). Do not keep raw Linear dumps in Code/Review prompts.
 - **Consistency:** All phases respect `core-standards.mdc` and domain rules (`api-routes-*.mdc`, `typescript.mdc`, etc.); they are **additive** with `token-policy.mdc`.
 - **Traceability:** Link code and review back to the plan (e.g. "implements AC-1, AC-2" in commits or PR description).
 - **Single source of truth:** The plan doc is the contract; change it when scope or criteria change, then proceed.

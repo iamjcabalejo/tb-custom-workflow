@@ -33,13 +33,13 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **ASK** when scope is unclear (discovery); then **PLAN** (authoring). No code changes, no file writes beyond the plan artifact.
 
-**Inputs:** User request, existing codebase (orient via **graphify** / `graphify-navigation` before Grep/Read), constraints (deadlines, stack, standards).
+**Inputs:** User request, existing codebase (orient via **graphify** phase budget: PLAN = required query; write concrete **File changes**), constraints (deadlines, stack, standards).
 
 **Outputs (handoff to Code):**
 - **Scope:** In/out; dependencies and boundaries.
 - **Acceptance criteria:** Testable conditions (Given/When/Then or checklist).
 - **Technical approach:** Key components, APIs, data shapes; references to rules (e.g. `core-standards.mdc`, `api-routes-python.mdc`, `react-frontend.mdc`). Cite graph-derived targets when available.
-- **Task list:** Ordered implementation steps; optional file/area mapping.
+- **Task list:** Ordered implementation steps; concrete **File changes** (Code is plan-first).
 
 **Artifact:** Single plan doc (e.g. `docs/plans/<feature>.md`). Use `feature-plan` to produce it; then hand to project-manager for Code → Review/Test.
 
@@ -55,7 +55,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **AGENT.** Subagents may create/modify files, run commands, install dependencies.
 
-**Inputs:** Plan artifact, project rules (core-standards, api-routes-python, python-backend, react-frontend, typescript), existing code.
+**Inputs:** Plan artifact (path + AC + File changes), project rules (core-standards, api-routes-python, python-backend, react-frontend, typescript), existing code. Prefer one orchestrator graphify summary per root; do not re-dump tickets.
 
 **Outputs (handoff to Review/Test):**
 - **Implementation:** Code that satisfies acceptance criteria and project standards.
@@ -68,7 +68,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Discipline:** Do not expand scope. If the plan is wrong, note it and either adjust the plan doc or hand back to **Plan mode** for revision—do not implement beyond scope.
 
-**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks. Every Code subagent prompt must include the graphify rule (query before Grep/Read; `graphify update .` after edits when CLI available).
+**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks. Every Code subagent prompt must include the **plan-first** graphify line (`graphify.mdc` phase budget; `graphify update .` after edits when CLI available).
 
 **Handoff rule:** Review/Test must receive a clear diff, the plan's acceptance criteria, and implementation notes. After Code completes, hand off to **Review/Test** and specify **Ask mode** (read-only) for reviewers.
 
@@ -80,7 +80,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **AGENT** (review-only): rework list, summary, test status. Use Cursor **Ask mode** so reviewers do not apply changes. **Agent mode** only when applying rework in a later Code iteration.
 
-**Inputs:** Plan (acceptance criteria), code diff, implementation notes, test results.
+**Inputs:** Plan (acceptance criteria), code diff, implementation notes, test results. **Graphify:** diff-first; query only for blast radius.
 
 **Outputs (handoff to Plan or Code):**
 - **Review summary:** Alignment with plan; adherence to core-standards, api-routes-python/react-frontend; security/performance notes.
@@ -89,7 +89,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Gates:** All acceptance criteria covered by tests; no project-rule violations; no unresolved high-severity security or data-integrity issues. **Production ready** only when all three gates pass and there are no Critical rework items.
 
-**Agents (Review):** backend-reviewer, frontend-reviewer (auto-triggered after Code). Backend-reviewer auto-selects Python or C# from the files under review.
+**Agents (Review):** backend-reviewer, frontend-reviewer (auto-triggered after Code). Backend-reviewer auto-selects Python or C# from the files under review. Every Review prompt must include the **diff-first** graphify line.
 
 **Handoff rule:** If **Critical** rework or gates not passed → hand back to **PLAN** (rework = new AC), then AGENT (Code), then Review/Test again. If only Suggestion/Nice to have → declare production ready; optionally offer to hand to Code with the rework list and re-run Review/Test.
 
@@ -112,6 +112,8 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 ## Cross-phase standards (strict)
 
 - **Consistency:** All phases respect `core-standards.mdc` and domain rules (`api-routes-python.mdc`, `react-frontend.mdc`, etc.).
+- **Graphify phase budget:** PLAN required; Code plan-first; Review diff-first (`graphify.mdc` / `graphify-navigation`). CLI for query; full `/graphify` skill only for build/update.
+- **Context hygiene:** Hand off plan path + AC; do not keep raw Linear dumps in Code/Review prompts. Prefer new chat for Code after large PLAN sessions.
 - **Traceability:** Link code and review to the plan (e.g. "implements AC-1, AC-2" in implementation notes or PR).
 - **Single source of truth:** The plan doc is the contract; change it when scope or criteria change, then proceed.
 - **Smooth handoff:** Each phase ends with **written artifacts**; no verbal-only handoffs.

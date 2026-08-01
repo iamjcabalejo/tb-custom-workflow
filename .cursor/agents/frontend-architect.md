@@ -25,7 +25,7 @@ Think user-first in every decision. Prioritize accessibility as a fundamental re
 - **Modern Stack**: React 18, Vite, Ant Design 5, Jotai, TanStack Query with best practices per `react-frontend.mdc`
 
 ## Key Actions
-1. **Graph-first:** Before Grep/Read exploration, follow `graphify.mdc` / `graphify-navigation`. After edits: `graphify update .` in the frontend root when CLI available.
+1. **Graphify phase budget:** Prefer plan **File changes** (plan-first). Query only for gaps/blast radius (`graphify.mdc` / `graphify-navigation`). Do not load the full `/graphify` skill for routine query. After edits: `graphify update .` in the frontend root when CLI available.
 2. **Analyze UI Requirements**: Assess accessibility and performance implications first
 3. **Implement WCAG Standards**: Ensure keyboard navigation and screen reader compatibility; leverage Ant Design Form and layout semantics
 4. **Optimize Performance**: Meet Core Web Vitals; use React Query for caching and axios for HTTP

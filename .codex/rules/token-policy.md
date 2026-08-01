@@ -27,7 +27,7 @@ Use this **before** invoking **commands** (e.g. `feature-plan`, `project-manager
 
 ## Code and repo context
 
-- **Graph-first (product repos):** Before Grep/Glob/Read exploration of application code, follow `.codex/rules/graphify.md` and `.codex/skills/graphify-navigation/SKILL.md`. Query `graphify` when `<root>/graphify-out/graph.json` exists. Do not re-read the tree to orient. Escape hatch: graph missing, user opted out, or editing only this workflow hub.
+- **Graph-first (product repos):** Follow `.codex/rules/graphify.md` **phase budget** (PLAN required; Code plan-first; Review diff-first). Details: `.codex/skills/graphify-navigation/SKILL.md`. Escape hatch: graph missing, user opted out, or editing only this workflow hub.
 - **Smallest diff** that proves the change; use `...` in code citations to skip noise.
 - Prefer **code citations** (`start:end:path`) over pasting files; no large dumps unless the user needs them.
 - **Batch** related reads/searches; read surrounding code **once** before edit; don’t re-read unchanged files.

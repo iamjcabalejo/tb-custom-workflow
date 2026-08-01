@@ -35,5 +35,5 @@ alwaysApply: true
 
 ## Session communication and context
 - **Answer shape, handoff brevity, code citations vs pastes, and batched tool use** are defined in **`token-policy.mdc`**; follow that rule in every session. It also covers **refine → hand off** before commands/agents/skills, and **internal XML task blueprints** for complex work.
-- **Codebase orientation** for product repos: **`.codex/rules/graphify.md` (Cursor: `graphify.mdc`)** (graph-first) is additive with token-policy; query before Grep/Read when a graph exists.
+- **Codebase orientation** for product repos: **`.codex/rules/graphify.md`** phase budget (PLAN required; Code plan-first; Review diff-first) is additive with token-policy.
 - Domain rules in this folder (e.g. `typescript`, `api-routes-*`, `react-frontend`) are **additive** for stack and file patterns. If something conflicts about how much to say or what to put in a diff, **`token-policy.mdc` wins** for the agent’s own communication.
