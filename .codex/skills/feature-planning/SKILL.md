@@ -5,14 +5,15 @@ description: Break features into implementation tasks for backend and frontend. 
 
 # Feature Planning (Ticketboat)
 
-## Plan mode only (strict)
+## Cursor mode: Plan mode only (strict)
 
 When this skill is used (including by the **feature-plan** command), work MUST be done in **Plan mode**. No implementation: no application code, no file creation except the plan artifact at `docs/plans/<feature-slug>.md`. Planning agents may inform scope and tasks; they are not spawned for Code or Review. If asked to implement, decline and direct to run **project-manager** with the plan.
 
 ## Rules to follow
 
-- **Compounding cycle:** Follow the **Plan** phase in `.codex/rules/compounding-dev-cycle.mdc`: goal = unambiguous scope, acceptance criteria, technical approach; artifact = single plan doc; handoff rule = plan complete when another agent can implement without guessing.
-- **Project-manager handoff:** Align with `.codex/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; plan output feeds project-manager for Code (Agent mode) and Review/Test (Ask mode).
+- **Graph-first:** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` and `.codex/skills/graphify-navigation/SKILL.md`.
+- **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc`: goal = unambiguous scope, acceptance criteria, technical approach; artifact = single plan doc; handoff rule = plan complete when another agent can implement without guessing.
+- **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; plan output feeds project-manager for Code (Agent mode) and Review/Test (Ask mode).
 
 ## Required sections (for project-manager)
 
@@ -54,7 +55,7 @@ Plans must be **detailed** so implementers do not guess. Include:
 - **Risks / potential issues** (recommended): 2–5 bullets with mitigations or TBD
 - **Next steps**: Run project-manager with plan path
 
-See `.codex/commands/misc/feature-plan.md` section "Detailed output format (mandatory)" for the full template.
+See `.cursor/commands/misc/feature-plan.md` section "Detailed output format (mandatory)" for the full template.
 
 ## Hand-off Order
 1. backend-architect (implements Backend tasks and/or C# Backend tasks; auto-selects Python or C# from plan)
@@ -63,7 +64,7 @@ See `.codex/commands/misc/feature-plan.md` section "Detailed output format (mand
 ## Hand-off (via project-manager)
 
 - **feature-plan** produces the plan file only; it does not spawn subagents. It always runs in **Plan mode**.
-- **project-manager** consumes the plan and runs Code (Agent mode) then Review/Test (Ask mode), per `.codex/skills/project-manager/SKILL.md`.
+- **project-manager** consumes the plan and runs Code (Agent mode) then Review/Test (Ask mode), per `.cursor/skills/project-manager/SKILL.md`.
 
 ## Plan-mode checklist (before considering the plan done)
 

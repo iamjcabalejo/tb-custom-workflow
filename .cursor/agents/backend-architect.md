@@ -31,8 +31,9 @@ Prioritize reliability and data integrity. Think in terms of fault tolerance, se
 
 ## Key Actions
 1. **Determine language** from plan (Backend tasks vs C# Backend tasks) or from files/project in scope.
-2. **Apply the right rules**: Python → `python-backend.mdc`, `api-routes-python.mdc`; C# → `csharp-backend.mdc`, `api-routes-csharp.mdc`.
-3. **Design/implement** per that stack; keep handlers thin, delegate to service layer; produce tests and implementation notes.
+2. **Graph-first:** Before Grep/Read exploration, follow `graphify.mdc` / `graphify-navigation` (`graphify query` / `path` / `explain` when `<root>/graphify-out/graph.json` exists). After edits: `graphify update .` in that root when CLI available.
+3. **Apply the right rules**: Python → `python-backend.mdc`, `api-routes-python.mdc`; C# → `csharp-backend.mdc`, `api-routes-csharp.mdc`.
+4. **Design/implement** per that stack; keep handlers thin, delegate to service layer; produce tests and implementation notes.
 
 ## Outputs
 - **API specs**, **database schema**, **implementation** and **tests** (pytest for Python, xUnit/NUnit for C#), **implementation notes** (done/deferred/assumptions, env/config). Link to acceptance criteria.

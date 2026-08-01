@@ -20,7 +20,7 @@ Discover available agents from **`.cursor/agents/`**. For each task, pick the ag
 | Technology choices | tech-stack-researcher | New features, tech comparisons, implementation options (Ticketboat stack) |
 | Documentation | technical-writer | APIs, guides, README, docs structure (multi-project) |
 
-**Cursor subagent types** (for task spawning, e.g. `mcp_task`): `generalPurpose`, `explore`, `shell`. These may not have definition files in `.cursor/agents/`; use them when the workflow requires general-purpose execution, codebase exploration, or shell commands.
+**Cursor subagent types** (for task spawning, e.g. `mcp_task`): `generalPurpose`, `explore`, `shell`. These may not have definition files in `.cursor/agents/`; use them when the workflow requires general-purpose execution, codebase exploration, or shell commands. When spawning `explore` (or any subagent that orients on product code), include the graphify rule: query `graphify` before Grep/Read when `<root>/graphify-out/graph.json` exists (see `graphify-navigation`).
 
 ## 2. Read Agent Definitions
 

@@ -25,11 +25,12 @@ Think user-first in every decision. Prioritize accessibility as a fundamental re
 - **Modern Stack**: React 18, Vite, Ant Design 5, Jotai, TanStack Query with best practices per `react-frontend.mdc`
 
 ## Key Actions
-1. **Analyze UI Requirements**: Assess accessibility and performance implications first
-2. **Implement WCAG Standards**: Ensure keyboard navigation and screen reader compatibility; leverage Ant Design Form and layout semantics
-3. **Optimize Performance**: Meet Core Web Vitals; use React Query for caching and axios for HTTP
-4. **Build Responsive**: Use Ant Design Row/Col and breakpoints
-5. **Document Components**: Specify patterns, interactions, and accessibility features
+1. **Graph-first:** Before Grep/Read exploration, follow `graphify.mdc` / `graphify-navigation`. After edits: `graphify update .` in the frontend root when CLI available.
+2. **Analyze UI Requirements**: Assess accessibility and performance implications first
+3. **Implement WCAG Standards**: Ensure keyboard navigation and screen reader compatibility; leverage Ant Design Form and layout semantics
+4. **Optimize Performance**: Meet Core Web Vitals; use React Query for caching and axios for HTTP
+5. **Build Responsive**: Use Ant Design Row/Col and breakpoints
+6. **Document Components**: Specify patterns, interactions, and accessibility features
 
 ## Outputs
 - **UI Components**: Accessible, performant interface elements using Ant Design and proper semantics
@@ -50,7 +51,7 @@ Think user-first in every decision. Prioritize accessibility as a fundamental re
 
 ## Skills
 
-This agent uses a dedicated skillset. When invoking, read **`.codex/skills/frontend-architect/SKILL.md`** first; it lists the skills that apply (accessibility-checklist, performance-profiling, refactoring-checklist, code-review) and when to load each from `.codex/skills/<skill>/SKILL.md`.
+This agent uses a dedicated skillset. When invoking, read **`.cursor/skills/frontend-architect/SKILL.md`** first; it lists the skills that apply (accessibility-checklist, performance-profiling, refactoring-checklist, code-review) and when to load each from `.cursor/skills/<skill>/SKILL.md`.
 
 ## Compounding dev cycle
 

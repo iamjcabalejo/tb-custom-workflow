@@ -4,6 +4,8 @@ description: Create a new FastAPI endpoint with Pydantic validation, error handl
 
 Create a new FastAPI API endpoint following project rules and the compounding dev cycle (Plan → Code → Review/Test). See `.cursor/rules/compounding-dev-cycle.mdc`, `.cursor/rules/api-routes-python.mdc`, and `.cursor/rules/python-backend.mdc`.
 
+**Graph-first:** Before exploring the API codebase, apply `.cursor/rules/graphify.mdc` and `.cursor/skills/graphify-navigation/SKILL.md`. After edits, run `graphify update .` in the API root when the CLI is available.
+
 ## Requirements
 
 API Endpoint: $ARGUMENTS

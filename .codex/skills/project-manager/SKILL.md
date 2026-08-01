@@ -5,7 +5,7 @@ description: Orchestrate the compounding development cycle (Plan → Code → Re
 
 # Project Manager Skill (Ticketboat)
 
-This skill enforces the **compounding development cycle** (`.codex/rules/compounding-dev-cycle.mdc`) with strict phase discipline and **automatic mode switching** (ASK → PLAN → AGENT). When orchestrating the cycle, you MUST follow the rule's **Mode switching** and **Mode transition guide** sections.
+This skill enforces the **compounding development cycle** (`.cursor/rules/compounding-dev-cycle.mdc`) with strict phase discipline and **automatic mode switching** (ASK → PLAN → AGENT). When orchestrating the cycle, you MUST follow the rule's **Mode switching** and **Mode transition guide** sections.
 
 **Ticketboat agents:** backend-architect, frontend-architect, backend-reviewer, frontend-reviewer, tech-stack-researcher, technical-writer. Code phase: backend-architect, frontend-architect. Review phase: backend-reviewer, frontend-reviewer. **Backend-architect** and **backend-reviewer** each **auto-select language** (Python or C#) from the plan or from the files in scope—one agent for all backend work.
 
@@ -20,7 +20,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 | **1a. Plan discovery** | **ASK** | Clarifying questions; gather requirements; structured requirements or RFC. Exit when scope and AC are unambiguous. |
 | **1b. Plan authoring** | **PLAN** | Write scope, AC, technical approach, task list. Output: single plan doc. Exit when another agent can implement without guessing. |
 | **2. Code** | **AGENT** | Full implementation. Subagents may edit, run commands, create files. |
-| **3. Review/Test** | **AGENT** (review-only) | Reviewers produce rework list and summary; do not apply changes unless explicitly asked. Use **read-only review** (no file edits) for this phase. |
+| **3. Review/Test** | **AGENT** (review-only) | Reviewers produce rework list and summary; do not apply changes unless explicitly asked. Use **Ask mode** in Cursor for read-only review. |
 | **4. Plan (rework)** | **PLAN** | Rework plan only; no implementation. Then AGENT (Code) → AGENT (Review) again. |
 
 **Handoff rule:** When you delegate a phase, tell the recipient which mode to use (ASK / PLAN / AGENT). Example: "Run this task in **Agent mode**" or "Perform this review in **Ask mode** and produce a rework list; do not apply changes." Follow the rule's **Mode transition guide** (Initial cycle and Rework cycle) for step order.
@@ -33,12 +33,12 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **ASK** when scope is unclear (discovery); then **PLAN** (authoring). No code changes, no file writes beyond the plan artifact.
 
-**Inputs:** User request, existing codebase, constraints (deadlines, stack, standards).
+**Inputs:** User request, existing codebase (orient via **graphify** / `graphify-navigation` before Grep/Read), constraints (deadlines, stack, standards).
 
 **Outputs (handoff to Code):**
 - **Scope:** In/out; dependencies and boundaries.
 - **Acceptance criteria:** Testable conditions (Given/When/Then or checklist).
-- **Technical approach:** Key components, APIs, data shapes; references to rules (e.g. `core-standards.mdc`, `api-routes-python.mdc`, `react-frontend.mdc`).
+- **Technical approach:** Key components, APIs, data shapes; references to rules (e.g. `core-standards.mdc`, `api-routes-python.mdc`, `react-frontend.mdc`). Cite graph-derived targets when available.
 - **Task list:** Ordered implementation steps; optional file/area mapping.
 
 **Artifact:** Single plan doc (e.g. `docs/plans/<feature>.md`). Use `feature-plan` to produce it; then hand to project-manager for Code → Review/Test.
@@ -68,7 +68,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Discipline:** Do not expand scope. If the plan is wrong, note it and either adjust the plan doc or hand back to **Plan mode** for revision—do not implement beyond scope.
 
-**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks.
+**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks. Every Code subagent prompt must include the graphify rule (query before Grep/Read; `graphify update .` after edits when CLI available).
 
 **Handoff rule:** Review/Test must receive a clear diff, the plan's acceptance criteria, and implementation notes. After Code completes, hand off to **Review/Test** and specify **Ask mode** (read-only) for reviewers.
 
@@ -78,7 +78,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Goal:** Verify behavior, standards, and security; produce pass/fail and rework list.
 
-**Mode:** **AGENT** (review-only): rework list, summary, test status. Use **read-only review** so reviewers do not apply changes. Use an implementation-capable mode only when applying rework in a later Code iteration.
+**Mode:** **AGENT** (review-only): rework list, summary, test status. Use Cursor **Ask mode** so reviewers do not apply changes. **Agent mode** only when applying rework in a later Code iteration.
 
 **Inputs:** Plan (acceptance criteria), code diff, implementation notes, test results.
 
@@ -123,7 +123,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 - Running the **project-manager** command with a feature plan.
 - Delegating tasks to backend-architect, frontend-architect, backend-reviewer, frontend-reviewer.
-- Ensuring the cycle follows Plan → Code → Review/Test → Plan with correct phase modes (ASK / PLAN / AGENT).
+- Ensuring the cycle follows Plan → Code → Review/Test → Plan with correct Cursor modes.
 - Creating rework plans after review and looping until production ready.
 
 ---

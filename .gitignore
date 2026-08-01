@@ -1,1 +1,4 @@
 .cursor/hooks/audit.log
+
+# graphify (local cost / optional cache — commit graph.json + GRAPH_REPORT.md in product repos)
+graphify-out/cost.json

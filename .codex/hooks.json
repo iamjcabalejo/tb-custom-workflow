@@ -2,12 +2,51 @@
   "version": 1,
   "hooks": {
     "afterFileEdit": [
-      { "command": ".codex/hooks/format.sh", "timeout": 10 }
+      {
+        "command": ".codex/hooks/format.sh",
+        "timeout": 10
+      }
     ],
-    "afterShellExecution": [{ "command": ".codex/hooks/audit.sh", "timeout": 5 }],
-    "beforeShellExecution": [{ "command": ".codex/hooks/audit.sh", "timeout": 5 }],
-    "sessionEnd": [{ "command": ".codex/hooks/audit.sh", "timeout": 5 }],
-    "sessionStart": [{ "command": ".codex/hooks/session-init.sh", "timeout": 5 }],
-    "stop": [{ "command": ".codex/hooks/audit.sh", "timeout": 5 }]
+    "afterShellExecution": [
+      {
+        "command": ".codex/hooks/audit.sh",
+        "timeout": 5
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": ".codex/hooks/audit.sh",
+        "timeout": 5
+      }
+    ],
+    "sessionEnd": [
+      {
+        "command": ".codex/hooks/audit.sh",
+        "timeout": 5
+      }
+    ],
+    "sessionStart": [
+      {
+        "command": ".codex/hooks/session-init.sh",
+        "timeout": 5
+      }
+    ],
+    "stop": [
+      {
+        "command": ".codex/hooks/audit.sh",
+        "timeout": 5
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-check"
+          }
+        ]
+      }
+    ]
   }
 }

@@ -6,13 +6,15 @@ description: Analyze task complexity and create actionable implementation plan
 
 Analyze the following task and create a clear, actionable implementation plan.
 
+**Graph-first:** Before exploring product repos for affected files/components, apply `.codex/rules/graphify.md` and `.codex/skills/graphify-navigation/SKILL.md`.
+
 ## Task
 
 $ARGUMENTS
 
 ## Agent Definitions
 
-**Apply the agent-selection skill** (`.codex/skills/agent-selection/SKILL.md`): identify relevant agents from `.codex/agents/` and apply their perspective to the analysis and implementation plan.
+**Apply the agent-selection skill** (`.cursor/skills/agent-selection/SKILL.md`): identify relevant agents from `.cursor/agents/` and apply their perspective to the analysis and implementation plan.
 
 **Relevant agents for this command (task breakdown):** backend-architect, frontend-architect, tech-stack-researcher, technical-writer. Use the subset that matches the task. **Ticketboat stack:** Backend = FastAPI, Python 3.12+, Pydantic v2, asyncpg, SQLAlchemy; Frontend = React 18, Vite, Ant Design, Jotai, TanStack Query.
 

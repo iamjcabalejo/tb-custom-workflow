@@ -4,9 +4,38 @@ Shared Cursor workflow hub for Ticketboat projects. Use this repo as the central
 
 ## Prompt flow (maximize context before implementation)
 
-**Order:** user prompt → **refine** (per `token-policy.mdc`) → **hand off** to commands, skills, or agents → work in app repos.
+**Order:** user prompt → **refine** (per `token-policy.mdc`) → **hand off** to commands, skills, or agents → **graph-first** orientation in product repos → work in app repos.
 
 Refining first produces a **short, unambiguous** brief (and an internal **XML blueprint** when the work is complex). Downstream steps spend tokens on **implementation and review**, not re-deriving scope. Full mechanics: `.cursor/rules/token-policy.mdc` (Session entry flow, *Complex work*).
+
+### Graphify (cut re-reads)
+
+[Graphify](https://github.com/Graphify-Labs/graphify) builds a local knowledge graph per product repo so agents **query** structure instead of re-reading the tree every command. See also [Reducing Your AI Costs](https://the-ai-surfer.remixr.io/resources/reducing-your-ai-costs).
+
+| Piece | Role |
+|-------|------|
+| `.cursor/rules/graphify.mdc` (`alwaysApply`) | Mandatory: `graphify query` / `path` / `explain` before Grep/Read exploration |
+| `.cursor/skills/graphify-navigation/` | Ticketboat multi-root graph gate for commands |
+| `.agents/skills/graphify/` (also under `.cursor/skills/graphify/`) | Official `/graphify` build/update skill |
+| `AGENTS.md` | Codex always-on graph guidance |
+
+**One-time (each developer machine):**
+
+```bash
+uv tool install graphifyy   # PyPI package name is graphifyy; CLI is graphify
+uv tool update-shell        # if `graphify` is not on PATH
+```
+
+**One-time (each product repo root — `admin-frontend`, `admin-api-python`, …):**
+
+```bash
+cd <product-repo>
+graphify extract . --code-only   # or /graphify . in chat
+graphify hook install            # optional: rebuild graph on commit
+# Commit graphify-out/ (except cost.json) so the team shares the map
+```
+
+This hub already ships the Cursor/Codex rules and skills. Re-running `graphify cursor install` in this repo may overwrite `.cursor/rules/graphify.mdc` with the upstream single-root template — prefer the Ticketboat multi-root rule already in this repo.
 
 ### Why XML beats a single prose prompt
 
@@ -16,9 +45,10 @@ Unstructured text mixes **role, task, constraints, and output** in one stream, s
 flowchart TD
   U[User prompt] --> R[Refine per token-policy]
   R --> H[Handoff brief]
-  H --> C[Commands e.g. feature-plan, project-manager]
-  H --> S[Skills e.g. feature-planning, backend-architect]
-  H --> A[Agents e.g. backend-architect, frontend-reviewer]
+  H --> G[Graphify query in product root]
+  G --> C[Commands e.g. feature-plan, project-manager]
+  G --> S[Skills e.g. feature-planning, backend-architect]
+  G --> A[Agents e.g. backend-architect, frontend-reviewer]
   C --> I[Custom implementation in product repositories]
   S --> I
   A --> I
@@ -58,12 +88,13 @@ One backend command covers both Python and C#; no separate backend agents per la
 
 ## Rules (summary)
 
-- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed), `compounding-dev-cycle.mdc`, `core-standards.mdc`.
+- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed; graph-first for product repos), `compounding-dev-cycle.mdc`, `core-standards.mdc`, `graphify.mdc` (query graph before Grep/Read exploration).
 - **Glob-based:** `python-backend.mdc` (`**/*.py`), `api-routes-python.mdc` (`**/api/**/*.py`), `csharp-backend.mdc` (`**/*.cs`), `api-routes-csharp.mdc` (`**/Controllers/**/*.cs`), `react-frontend.mdc` (`**/*.tsx`), `typescript.mdc` (`**/*.ts`).
 
 ## Skills
 
-Orchestration: `feature-planning`, `project-manager`, `agent-selection`.  
+Orchestration: `feature-planning`, `project-manager`, `agent-selection`, `graphify-navigation`.  
+Graphify build: `graphify` (official `/graphify` skill).  
 Backend: `backend-architect`, `backend-reviewer` (both reference api-design-patterns, postgresql, security-audit, code-review; Python also api-testing).  
 Frontend: `frontend-architect`, `frontend-reviewer` (accessibility-checklist, performance-profiling, code-review).  
 Shared: `api-design-patterns`, `api-testing`, `postgresql`, `security-audit`, `code-review`, `refactoring-checklist`, `requirements-discovery`, `docs-structure`, `performance-profiling`, `accessibility-checklist`.
@@ -72,17 +103,18 @@ Shared: `api-design-patterns`, `api-testing`, `postgresql`, `security-audit`, `c
 
 `.cursor/hooks.json` uses `version: 1` and aligns with `token-policy.mdc`, `compounding-dev-cycle.mdc`, and `core-standards.mdc` (lean side effects, no secret logging).
 
-- **sessionStart (`session-init.sh`)** — Injects **additional_context** for a new session: refine → hand off, XML blueprints when complex, compounding cycle, core standards, and pointer to **README** (Why XML). Does not replace the rule files; it reminds the agent to load them.
+- **sessionStart (`session-init.sh`)** — Injects **additional_context** for a new session: refine → hand off, XML blueprints when complex, compounding cycle, core standards, graphify graph-first, and pointer to **README** (Why XML). Does not replace the rule files; it reminds the agent to load them.
 - **afterFileEdit (`format.sh`)** — `ruff format` (if `ruff` on `PATH`) else `black` for `*.py`; Prettier (via `npx`) for TS/TSX/JS/JSON/MD/MDC when a `package.json` is found in the file’s directory or a parent (works better in monorepos than only repo root). Fails open if tools are missing.
 - **beforeShellExecution / afterShellExecution / sessionEnd / stop (`audit.sh`)** — Appends `hook_event` + **UTC** timestamp to `.cursor/hooks/audit.log` only. **Stdin is never written** to the log (avoids PII/secrets, per **core-standards**). `beforeShellExecution` returns `{"permission":"allow"}`; extend this script to gate if your org requires it.
 
 ## Quick start
 
 1. Include this repo in your Cursor multi-root workspace with `admin-frontend`, `admin-api-python`, and/or `admin-api-csharp`.
-2. **Refine and route:** turn the user ask into a tight brief (`token-policy`), then pick **feature-plan** / **project-manager** / agents as needed.
-3. **Plan:** Set chat to **Plan** mode, then run **feature-plan** with a feature name/slug → produces `docs/plans/<feature>.md`.
-4. **Execute:** Run **project-manager** with the plan path → backend-architect (auto-selects Python/C#), frontend-architect, then backend-reviewer and frontend-reviewer.
-5. Resolve Critical rework via Plan (rework AC) → Code → Review until production ready.
+2. Install Graphify CLI (`uv tool install graphifyy`) and build a graph once per product repo (`graphify extract . --code-only`).
+3. **Refine and route:** turn the user ask into a tight brief (`token-policy`), then pick **feature-plan** / **project-manager** / agents as needed.
+4. **Plan:** Set chat to **Plan** mode, then run **feature-plan** with a feature name/slug → produces `docs/plans/<feature>.md` (agents query the graph before exploring).
+5. **Execute:** Run **project-manager** with the plan path → backend-architect (auto-selects Python/C#), frontend-architect, then backend-reviewer and frontend-reviewer.
+6. Resolve Critical rework via Plan (rework AC) → Code → Review until production ready.
 
 ## Stacks
 

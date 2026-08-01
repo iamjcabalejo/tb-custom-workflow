@@ -74,12 +74,12 @@ Each mode has distinct responsibilities and output expectations.
 
 **Modes:** When scope is unclear, run **ASK** (Plan discovery) first; then **PLAN** (Plan authoring). When the user request already has clear scope and AC, go directly to **PLAN**.
 
-**Inputs:** User request, existing codebase, constraints (deadlines, stack, standards).
+**Inputs:** User request, existing codebase (orient via **graphify** per `graphify.mdc` / `graphify-navigation` before Grep/Read), constraints (deadlines, stack, standards).
 
 **Outputs (handoff to Code):**
 - **Scope:** What is in/out; dependencies and boundaries.
 - **Acceptance criteria:** Testable conditions (Given/When/Then or checklist).
-- **Technical approach:** Key components, APIs, data shapes; references to existing rules (e.g. `core-standards.mdc`, `api-routes.mdc`).
+- **Technical approach:** Key components, APIs, data shapes; references to existing rules (e.g. `core-standards.mdc`, `api-routes.mdc`). Cite graph-derived file/symbol targets when available.
 - **Task list:** Ordered implementation steps; optional rough file/area mapping.
 
 **Artifact:** Prefer a single plan doc (e.g. `docs/plans/<feature>.md` or ticket) that Code can open and follow. Use `feature-plan` to produce the plan file; use `project-manager` with that plan to run the full cycle (Code → Review/Test → Plan if needed → repeat until production ready).

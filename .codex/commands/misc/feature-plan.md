@@ -4,16 +4,17 @@ description: Create a feature plan file for the compounding cycle (Plan mode onl
 
 **Scope of this command:** This command produces **only** a feature plan document. It runs in **Plan mode** at all times: planning only, no implementation. It does **not** spawn Code or Review agents. For the full cycle, run **project-manager** with the plan path after this command.
 
-## Plan mode only (strict)
+## Cursor mode: Plan mode only (strict)
 
 You MUST run this command in **Plan mode**. Do not implement code, create application files, or run build/test commands. Your only allowed output is the plan document (and writing it to `docs/plans/<feature-slug>.md`). If the user or context asks you to "also implement" or "start coding," decline and remind them: feature-plan is planning only; use project-manager with this plan to run Code → Review/Test.
 
 ## Rules to follow
 
-- **Token policy:** Apply `.codex/rules/token-policy.mdc` first—**refine** the user’s feature request into a tight plan brief (Session entry flow), then author the plan doc; no filler.
-- **Compounding cycle:** Follow the **Plan** phase in `.codex/rules/compounding-dev-cycle.mdc` (scope, acceptance criteria, technical approach, task list; handoff rule: plan complete when another agent can implement without guessing).
-- **Project-manager handoff:** Align with `.codex/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; your output feeds the next phase (project-manager runs Code in Agent mode, then Review/Test in Ask mode).
-- **Feature-planning skill:** Apply `.codex/skills/feature-planning/SKILL.md` so the plan includes all required sections for project-manager.
+- **Token policy:** Apply `.cursor/rules/token-policy.mdc` first—**refine** the user’s feature request into a tight plan brief (Session entry flow), then author the plan doc; no filler.
+- **Graph-first:** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` (Cursor: `.cursor/rules/graphify.mdc`) and `.codex/skills/graphify-navigation/SKILL.md` (`graphify query` / `path` / `explain`). Do not re-read the tree to orient.
+- **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc` (scope, acceptance criteria, technical approach, task list; handoff rule: plan complete when another agent can implement without guessing).
+- **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; your output feeds the next phase (project-manager runs Code in Agent mode, then Review/Test in Ask mode).
+- **Feature-planning skill:** Apply `.cursor/skills/feature-planning/SKILL.md` so the plan includes all required sections for project-manager.
 
 ## Feature / plan target
 
@@ -87,7 +88,7 @@ Produce a **detailed** plan so project-manager and implementers can work without
 
 ## Agent definitions (planning perspective only)
 
-**Apply the agent-selection skill** (`.codex/skills/agent-selection/SKILL.md`): identify relevant agents for **planning** (not implementation), read their definitions from `.codex/agents/`, and apply their perspective to the plan.
+**Apply the agent-selection skill** (`.cursor/skills/agent-selection/SKILL.md`): identify relevant agents for **planning** (not implementation), read their definitions from `.cursor/agents/`, and apply their perspective to the plan.
 
 **Relevant agents for this command (planning only):** tech-stack-researcher, backend-architect, frontend-architect. Use them to inform scope, AC, and task blocks; do not spawn them for Code or Review.
 

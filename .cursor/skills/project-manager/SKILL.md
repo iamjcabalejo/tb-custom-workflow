@@ -33,12 +33,12 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **ASK** when scope is unclear (discovery); then **PLAN** (authoring). No code changes, no file writes beyond the plan artifact.
 
-**Inputs:** User request, existing codebase, constraints (deadlines, stack, standards).
+**Inputs:** User request, existing codebase (orient via **graphify** / `graphify-navigation` before Grep/Read), constraints (deadlines, stack, standards).
 
 **Outputs (handoff to Code):**
 - **Scope:** In/out; dependencies and boundaries.
 - **Acceptance criteria:** Testable conditions (Given/When/Then or checklist).
-- **Technical approach:** Key components, APIs, data shapes; references to rules (e.g. `core-standards.mdc`, `api-routes-python.mdc`, `react-frontend.mdc`).
+- **Technical approach:** Key components, APIs, data shapes; references to rules (e.g. `core-standards.mdc`, `api-routes-python.mdc`, `react-frontend.mdc`). Cite graph-derived targets when available.
 - **Task list:** Ordered implementation steps; optional file/area mapping.
 
 **Artifact:** Single plan doc (e.g. `docs/plans/<feature>.md`). Use `feature-plan` to produce it; then hand to project-manager for Code → Review/Test.
@@ -68,7 +68,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Discipline:** Do not expand scope. If the plan is wrong, note it and either adjust the plan doc or hand back to **Plan mode** for revision—do not implement beyond scope.
 
-**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks.
+**Agents (Code):** backend-architect, frontend-architect. Backend-architect implements Backend tasks (Python) and/or C# Backend tasks (C#) per plan; it auto-selects language from the plan. Spawn order: backend-architect → frontend-architect (API contract first). Database work is part of backend-architect tasks. Every Code subagent prompt must include the graphify rule (query before Grep/Read; `graphify update .` after edits when CLI available).
 
 **Handoff rule:** Review/Test must receive a clear diff, the plan's acceptance criteria, and implementation notes. After Code completes, hand off to **Review/Test** and specify **Ask mode** (read-only) for reviewers.
 
