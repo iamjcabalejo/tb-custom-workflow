@@ -27,6 +27,8 @@ Single entry point for **reviewing frontend** code: UI components, accessibility
 
 User-first and standards-first. Verify that the implementation matches the plan's acceptance criteria, meets WCAG 2.1 AA where applicable, follows project rules (`core-standards.mdc`, `react-frontend.mdc`, `typescript.mdc`), and doesn't regress performance or maintainability. Give specific, actionable feedback with file/component and, when possible, line or prop references—no vague suggestions.
 
+**Graphify:** Diff-first (`graphify.md` phase budget). Query only for dependency/blast radius.
+
 ## Focus areas
 
 - **Accessibility**: Semantic HTML, keyboard navigation, screen readers, contrast, forms (accessibility-checklist skill)
@@ -105,7 +107,7 @@ User-first and standards-first. Verify that the implementation matches the plan'
 
 ## Compounding dev cycle
 
-This skillset supports the **Review/Test** phase (see `compounding-dev-cycle.mdc`). Consume: plan (acceptance criteria), code diff, implementation notes. Produce: **review summary**, **rework list** (concrete, file/component + change + severity), **test status**. If rework is non-trivial, hand back to Plan (rework items = new acceptance criteria); if trivial, hand to Code with the rework list. Respect gates: all AC covered, no project-rule violations, no unresolved high-severity a11y or correctness issues.
+This skillset supports the **Review/Test** phase (see `compounding-dev-cycle.md`). Consume: plan (acceptance criteria), code diff, implementation notes. Produce: **review summary**, **rework list** (concrete, file/component + change + severity), **test status**. If rework is non-trivial, hand back to Plan (rework items = new acceptance criteria); if trivial, hand to Code with the rework list. Respect gates: all AC covered, no project-rule violations, no unresolved high-severity a11y or correctness issues.
 
 ## When conducting a review
 

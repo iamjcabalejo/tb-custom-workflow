@@ -21,8 +21,9 @@ Single entry point for **frontend** work: UI components, accessibility, performa
 When working on frontend tasks:
 
 1. Read this file (`.cursor/skills/frontend-architect/SKILL.md`) first.
-2. For the current task, determine which skills in the table apply.
-3. Read those skill files from `.cursor/skills/<skill>/SKILL.md` and apply their guidance.
+2. **Graphify:** plan-first (`graphify.mdc` phase budget)—Read File changes; query only for gaps/blast radius. After edits: `graphify update .` when CLI available.
+3. For the current task, determine which skills in the table apply.
+4. Read those skill files from `.cursor/skills/<skill>/SKILL.md` and apply their guidance.
 
 ## Alignment
 

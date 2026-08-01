@@ -9,7 +9,7 @@ Use this skill whenever a command instructs you to "apply the agent-selection sk
 
 ## 1. Identify Relevant Agents
 
-Discover available agents from **`.cursor/agents/`**. For each task, pick the agent(s) whose domain matches. The command may override with a **Relevant agents for this command** list; use that when provided.
+Discover available agents from **`.codex/agents/`**. For each task, pick the agent(s) whose domain matches. The command may override with a **Relevant agents for this command** list; use that when provided.
 
 | Domain | Agent | When to use |
 |--------|--------|-------------|
@@ -20,11 +20,11 @@ Discover available agents from **`.cursor/agents/`**. For each task, pick the ag
 | Technology choices | tech-stack-researcher | New features, tech comparisons, implementation options (Ticketboat stack) |
 | Documentation | technical-writer | APIs, guides, README, docs structure (multi-project) |
 
-**Cursor subagent types** (for task spawning, e.g. `mcp_task`): `generalPurpose`, `explore`, `shell`. These may not have definition files in `.cursor/agents/`; use them when the workflow requires general-purpose execution, codebase exploration, or shell commands. When spawning `explore` (or any subagent that orients on product code), include the graphify rule: query `graphify` before Grep/Read when `<root>/graphify-out/graph.json` exists (see `graphify-navigation`).
+**Cursor subagent types** (for task spawning, e.g. `mcp_task`): `generalPurpose`, `explore`, `shell`. These may not have definition files in `.codex/agents/`; use them when the workflow requires general-purpose execution, codebase exploration, or shell commands. When spawning `explore` (or any subagent that orients on product code), include the **graphify phase budget** (`graphify.md` / `graphify-navigation`): PLAN required query; Code plan-first; Review diff-first.
 
 ## 2. Read Agent Definitions
 
-- Load the relevant agent definition files from `.cursor/agents/<agent-name>.md`.
+- Load the relevant agent definition files from `.codex/agents/<agent-name>.md`.
 - Read frontmatter (name, description), triggers, behavioral mindset, focus areas, key actions, and boundaries.
 
 ## 3. Apply Agent Perspective
@@ -42,5 +42,5 @@ If the task spans multiple domains:
 
 ## Single Source of Truth
 
-- **Agent definitions:** `.cursor/agents/` — one `.md` file per agent (backend-architect, frontend-architect, backend-reviewer, frontend-reviewer, tech-stack-researcher, technical-writer). Backend-architect and backend-reviewer each auto-select Python or C# when invoked.
+- **Agent definitions:** `.codex/agents/` — one `.md` file per agent (backend-architect, frontend-architect, backend-reviewer, frontend-reviewer, tech-stack-researcher, technical-writer). Backend-architect and backend-reviewer each auto-select Python or C# when invoked.
 - Commands that use this skill may list only the **subset** of agents relevant to that command (e.g. feature-plan, project-manager).

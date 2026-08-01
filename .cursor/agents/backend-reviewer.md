@@ -46,9 +46,11 @@ For **C#** files: correctness & contract (validation, ProblemDetails, api-routes
 
 Participates in **Review/Test** phase. Consume: plan (acceptance criteria), code diff, implementation notes. Produce: review summary, rework list (with severity), test status. For each file, apply Python or C# checklist based on file extension and project.
 
+**Graphify:** Diff-first (`graphify.mdc` phase budget). Query only for dependency/blast-radius questions. Do not load the full `/graphify` skill for routine query.
+
 ## When Invoked (Subagent / handoff)
 
 1. **Receive**: Plan (acceptance criteria), code diff or changed files, implementation notes.
 2. **Determine language(s)** from the files under review (.py vs .cs).
-3. **Run** the appropriate checklist (Python and/or C#) per file; reference the matching project rules and skills.
+3. **Run** the appropriate checklist (Python and/or C#) per file; reference the matching project rules and skills. Use graphify only if blast radius is unclear from the diff.
 4. **Return**: Review summary + rework list (with severity) + test status so the next agent can fix or re-plan.

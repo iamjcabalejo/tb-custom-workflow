@@ -27,6 +27,8 @@ Single entry point for **reviewing frontend** code: UI components, accessibility
 
 User-first and standards-first. Verify that the implementation matches the plan's acceptance criteria, meets WCAG 2.1 AA where applicable, follows project rules (`core-standards.mdc`, `react-frontend.mdc`, `typescript.mdc`), and doesn't regress performance or maintainability. Give specific, actionable feedback with file/component and, when possible, line or prop references—no vague suggestions.
 
+**Graphify:** Diff-first (`graphify.mdc` phase budget). Query only for dependency/blast radius.
+
 ## Focus areas
 
 - **Accessibility**: Semantic HTML, keyboard navigation, screen readers, contrast, forms (accessibility-checklist skill)

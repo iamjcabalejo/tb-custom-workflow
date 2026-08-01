@@ -31,8 +31,9 @@ If the plan has both Backend tasks and C# Backend tasks, implement both; apply P
 
 1. Read this file first.
 2. **Determine language(s)** from the plan or from the files/project in scope (see table above).
-3. For the current task, determine which skills apply and read those skill files.
-4. Apply **Python** patterns (FastAPI, Pydantic, Depends(), pytest) or **C#** patterns (ASP.NET Core, EF Core/Dapper, DI, xUnit/NUnit) according to the selected language.
+3. **Graphify:** plan-first (`graphify.md` phase budget)—Read File changes; query only for gaps/blast radius. After edits: `graphify update .` when CLI available.
+4. For the current task, determine which skills apply and read those skill files.
+5. Apply **Python** patterns (FastAPI, Pydantic, Depends(), pytest) or **C#** patterns (ASP.NET Core, EF Core/Dapper, DI, xUnit/NUnit) according to the selected language.
 
 ## Alignment
 

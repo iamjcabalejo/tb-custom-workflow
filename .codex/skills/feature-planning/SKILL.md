@@ -11,9 +11,9 @@ When this skill is used (including by the **feature-plan** command), work MUST b
 
 ## Rules to follow
 
-- **Graph-first:** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` and `.codex/skills/graphify-navigation/SKILL.md`.
-- **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc`: goal = unambiguous scope, acceptance criteria, technical approach; artifact = single plan doc; handoff rule = plan complete when another agent can implement without guessing.
-- **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; plan output feeds project-manager for Code (Agent mode) and Review/Test (Ask mode).
+- **Graph-first (PLAN phase):** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` phase budget and `.codex/skills/graphify-navigation/SKILL.md` (`query --budget 1500` / path / explain). Write concrete **File changes**.
+- **Compounding cycle:** Follow the **Plan** phase in `.codex/rules/compounding-dev-cycle.md`: goal = unambiguous scope, acceptance criteria, technical approach; artifact = single plan doc; handoff rule = plan complete when another agent can implement without guessing.
+- **Project-manager handoff:** Align with `.codex/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; plan output feeds project-manager for Code (Agent mode) and Review/Test (Ask mode).
 
 ## Required sections (for project-manager)
 
@@ -64,7 +64,7 @@ See `.cursor/commands/misc/feature-plan.md` section "Detailed output format (man
 ## Hand-off (via project-manager)
 
 - **feature-plan** produces the plan file only; it does not spawn subagents. It always runs in **Plan mode**.
-- **project-manager** consumes the plan and runs Code (Agent mode) then Review/Test (Ask mode), per `.cursor/skills/project-manager/SKILL.md`.
+- **project-manager** consumes the plan and runs Code (Agent mode) then Review/Test (Ask mode), per `.codex/skills/project-manager/SKILL.md`.
 
 ## Plan-mode checklist (before considering the plan done)
 

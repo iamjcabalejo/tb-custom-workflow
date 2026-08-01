@@ -21,10 +21,11 @@ Single entry point for **frontend** work: UI components, accessibility, performa
 When working on frontend tasks:
 
 1. Read this file (`.codex/skills/frontend-architect/SKILL.md`) first.
-2. For the current task, determine which skills in the table apply.
-3. Read those skill files from `.codex/skills/<skill>/SKILL.md` and apply their guidance.
+2. **Graphify:** plan-first (`graphify.md` phase budget)—Read File changes; query only for gaps/blast radius. After edits: `graphify update .` when CLI available.
+3. For the current task, determine which skills in the table apply.
+4. Read those skill files from `.codex/skills/<skill>/SKILL.md` and apply their guidance.
 
 ## Alignment
 
 - Follow project rules: `core-standards.mdc`, `react-frontend.mdc`, `typescript.mdc` when in scope.
-- Handoff: implementation notes, tests where required, and linkage to acceptance criteria per `compounding-dev-cycle.mdc`.
+- Handoff: implementation notes, tests where required, and linkage to acceptance criteria per `compounding-dev-cycle.md`.

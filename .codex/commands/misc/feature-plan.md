@@ -10,11 +10,11 @@ You MUST run this command in **Plan mode**. Do not implement code, create applic
 
 ## Rules to follow
 
-- **Token policy:** Apply `.cursor/rules/token-policy.mdc` first—**refine** the user’s feature request into a tight plan brief (Session entry flow), then author the plan doc; no filler.
-- **Graph-first:** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` (Cursor: `.cursor/rules/graphify.mdc`) and `.codex/skills/graphify-navigation/SKILL.md` (`graphify query` / `path` / `explain`). Do not re-read the tree to orient.
-- **Compounding cycle:** Follow the **Plan** phase in `.cursor/rules/compounding-dev-cycle.mdc` (scope, acceptance criteria, technical approach, task list; handoff rule: plan complete when another agent can implement without guessing).
-- **Project-manager handoff:** Align with `.cursor/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; your output feeds the next phase (project-manager runs Code in Agent mode, then Review/Test in Ask mode).
-- **Feature-planning skill:** Apply `.cursor/skills/feature-planning/SKILL.md` so the plan includes all required sections for project-manager.
+- **Token policy:** Apply `.codex/rules/token-policy.md` first—**refine** the user’s feature request into a tight plan brief (Session entry flow), then author the plan doc; no filler.
+- **Graph-first (PLAN phase):** Before exploring product repos for technical design or file mapping, apply `.codex/rules/graphify.md` phase budget and `.codex/skills/graphify-navigation/SKILL.md` (`graphify query "…" --budget 1500` / `path` / `explain`). Write concrete paths into **File changes**. Do not load the full `/graphify` skill for routine query.
+- **Compounding cycle:** Follow the **Plan** phase in `.codex/rules/compounding-dev-cycle.md` (scope, acceptance criteria, technical approach, task list; handoff rule: plan complete when another agent can implement without guessing).
+- **Project-manager handoff:** Align with `.codex/skills/project-manager/SKILL.md`: Plan phase uses Plan mode; your output feeds the next phase (project-manager runs Code in Agent mode, then Review/Test in Ask mode).
+- **Feature-planning skill:** Apply `.codex/skills/feature-planning/SKILL.md` so the plan includes all required sections for project-manager.
 
 ## Feature / plan target
 
@@ -88,7 +88,7 @@ Produce a **detailed** plan so project-manager and implementers can work without
 
 ## Agent definitions (planning perspective only)
 
-**Apply the agent-selection skill** (`.cursor/skills/agent-selection/SKILL.md`): identify relevant agents for **planning** (not implementation), read their definitions from `.cursor/agents/`, and apply their perspective to the plan.
+**Apply the agent-selection skill** (`.codex/skills/agent-selection/SKILL.md`): identify relevant agents for **planning** (not implementation), read their definitions from `.codex/agents/`, and apply their perspective to the plan.
 
 **Relevant agents for this command (planning only):** tech-stack-researcher, backend-architect, frontend-architect. Use them to inform scope, AC, and task blocks; do not spawn them for Code or Review.
 

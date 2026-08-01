@@ -2,7 +2,7 @@
 description: Fetch a Linear issue (read-only) and author a repo plan. Default stops after PLAN; Code/Review via project-manager in a new chat. Does not mutate Linear.
 ---
 
-You are the **linear/apply-ticket** orchestrator. Fetch **one Linear issue**, refine it, and write a repo plan. Follow **`.cursor/rules/token-policy.mdc`**, **`.cursor/rules/graphify.mdc`** (phase budget), and **`.cursor/rules/compounding-dev-cycle.mdc`**.
+You are the **linear/apply-ticket** orchestrator. Fetch **one Linear issue**, refine it, and write a repo plan. Follow **`.codex/rules/token-policy.md`**, **`.codex/rules/graphify.md`** (phase budget), and **`.codex/rules/compounding-dev-cycle.md`**.
 
 **Default scope:** Read ticket → ASK if blocked → **PLAN only** → hand off. **Do not** load `project-manager` or `agent-selection` skills unless the user explicitly opts into in-chat Code (see below).
 
@@ -35,7 +35,7 @@ You are the **linear/apply-ticket** orchestrator. Fetch **one Linear issue**, re
 
 ## Graphify
 
-Follow `graphify.mdc` phase budget (PLAN = required `query --budget 1500` / path / explain before explore; write **File changes**). CLI only—do not load the full `/graphify` skill.
+Follow `graphify.md` phase budget (PLAN = required `query --budget 1500` / path / explain before explore; write **File changes**). CLI only—do not load the full `/graphify` skill.
 
 ## Phase 0: ASK (only when blocked)
 
@@ -64,7 +64,7 @@ After the plan file is written and the gate passes:
 2. Tell the user: run **`/project-manager docs/plans/<feature-slug>.md` in a new chat** for Code → Review.
 3. Summarize: ticket key, plan path, AC count, domains in scope.
 
-**In-chat Code (opt-in only):** Continue to Code/Review in this thread **only if** the user explicitly says so (e.g. “continue in this chat”, “implement now”). Then follow `.cursor/skills/project-manager/SKILL.md` / `.cursor/commands/misc/project-manager.md`: pass **plan path + domain sections** (not Linear dumps); graphify plan-first / diff-first; spawn only agents the plan needs.
+**In-chat Code (opt-in only):** Continue to Code/Review in this thread **only if** the user explicitly says so (e.g. “continue in this chat”, “implement now”). Then follow `.codex/skills/project-manager/SKILL.md` / `.codex/commands/misc/project-manager.md`: pass **plan path + domain sections** (not Linear dumps); graphify plan-first / diff-first; spawn only agents the plan needs.
 
 ## Handoff discipline
 
