@@ -5,7 +5,7 @@ alwaysApply: true
 
 # TokenPolicy
 
-**Authoritative** for how the agent spends context in this repo. `core-standards.mdc` and `compounding-dev-cycle.mdc` point here; stack rules are additive.
+**Authoritative** for how the agent spends context in this repo. `core-standards.md` and `compounding-dev-cycle.md` point here; stack rules are additive.
 
 **Goal:** Spend context on actions and decisions. Avoid noise, repeated reads, and oversized replies.
 
@@ -28,6 +28,7 @@ Use this **before** invoking **commands** (e.g. `feature-plan`, `project-manager
 ## Code and repo context
 
 - **Graph-first (product repos):** Follow `.codex/rules/graphify.md` **phase budget** (PLAN required; Code plan-first; Review diff-first). Details: `.codex/skills/graphify-navigation/SKILL.md`. Escape hatch: graph missing, user opted out, or editing only this workflow hub.
+- **Chat split:** After PLAN (`feature-plan` / `apply-ticket`), prefer a **new chat** for `/project-manager` Code→Review so Conversation tokens do not stack.
 - **Smallest diff** that proves the change; use `...` in code citations to skip noise.
 - Prefer **code citations** (`start:end:path`) over pasting files; no large dumps unless the user needs them.
 - **Batch** related reads/searches; read surrounding code **once** before edit; don’t re-read unchanged files.

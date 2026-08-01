@@ -2,9 +2,9 @@
 description: Create a new FastAPI endpoint with Pydantic validation, error handling, and async support
 ---
 
-Create a new FastAPI API endpoint following project rules and the compounding dev cycle (Plan → Code → Review/Test). See `.cursor/rules/compounding-dev-cycle.mdc`, `.cursor/rules/api-routes-python.mdc`, and `.cursor/rules/python-backend.mdc`.
+Create a new FastAPI API endpoint following project rules and the compounding dev cycle (Plan → Code → Review/Test). See `.codex/rules/compounding-dev-cycle.md`, `.codex/rules/api-routes-python.mdc`, and `.codex/rules/python-backend.mdc`.
 
-**Graph-first:** Before exploring the API codebase, apply `.codex/rules/graphify.md` and `.codex/skills/graphify-navigation/SKILL.md`. After edits, run `graphify update .` in the API root when the CLI is available.
+**Graphify:** Follow `.codex/rules/graphify.md` phase budget (Code = plan-first if a plan lists files; otherwise query `--budget 1500` before explore). After edits: `graphify update .` in the API root when CLI available. Do not load the full `/graphify` skill for routine query.
 
 ## Requirements
 
@@ -16,7 +16,7 @@ This command delivers **Code** phase output. If the new API is part of a feature
 
 ## Agent Definitions
 
-**Apply the agent-selection skill** (`.cursor/skills/agent-selection/SKILL.md`): before implementing, identify relevant agents, read their definitions from `.cursor/agents/`, and apply their perspective.
+**Apply the agent-selection skill** (`.codex/skills/agent-selection/SKILL.md`): before implementing, identify relevant agents, read their definitions from `.codex/agents/`, and apply their perspective.
 
 **Relevant agents for this command:** backend-architect (primary), backend-reviewer (checklist for handoff). Implement in line with `api-routes-python.mdc`; produce implementation notes for Review/Test. The generated route should be verifiable by backend-reviewer: include tests or test guidance (pytest); document what was done, deferred, and env/config.
 

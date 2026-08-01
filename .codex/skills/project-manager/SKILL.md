@@ -55,7 +55,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 **Mode:** **AGENT.** Subagents may create/modify files, run commands, install dependencies.
 
-**Inputs:** Plan artifact (path + AC + File changes), project rules (core-standards, api-routes-python, python-backend, react-frontend, typescript), existing code. Prefer one orchestrator graphify summary per root; do not re-dump tickets.
+**Inputs:** Plan **path** + **domain sections only** (not full plan paste), AC, File changes, project rules, existing code. Prefer one orchestrator graphify summary per root; do not re-dump tickets.
 
 **Outputs (handoff to Review/Test):**
 - **Implementation:** Code that satisfies acceptance criteria and project standards.
@@ -113,7 +113,7 @@ Switch modes explicitly as you progress. Each phase runs in a specific mode; sta
 
 - **Consistency:** All phases respect `core-standards.mdc` and domain rules (`api-routes-python.mdc`, `react-frontend.mdc`, etc.).
 - **Graphify phase budget:** PLAN required; Code plan-first; Review diff-first (`graphify.md` / `graphify-navigation`). CLI for query; full `/graphify` skill only for build/update.
-- **Context hygiene:** Hand off plan path + AC; do not keep raw Linear dumps in Code/Review prompts. Prefer new chat for Code after large PLAN sessions.
+- **Context hygiene:** Hand off plan path + domain sections; no Linear dumps. After `apply-ticket` PLAN, default to **new chat** + `/project-manager <plan-path>` for Code.
 - **Traceability:** Link code and review to the plan (e.g. "implements AC-1, AC-2" in implementation notes or PR).
 - **Single source of truth:** The plan doc is the contract; change it when scope or criteria change, then proceed.
 - **Smooth handoff:** Each phase ends with **written artifacts**; no verbal-only handoffs.

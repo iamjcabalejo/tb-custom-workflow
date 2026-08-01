@@ -113,8 +113,8 @@ Shared: `api-design-patterns`, `api-testing`, `postgresql`, `security-audit`, `c
 1. Include this repo in your Cursor multi-root workspace with `admin-frontend`, `admin-api-python`, and/or `admin-api-csharp`.
 2. Install Graphify CLI (`uv tool install graphifyy`) and build a graph once per product repo (`graphify extract . --code-only`).
 3. **Refine and route:** turn the user ask into a tight brief (`token-policy`), then pick **feature-plan** / **project-manager** / agents as needed.
-4. **Plan:** Set chat to **Plan** mode, then run **feature-plan** (or **apply-ticket**) → `docs/plans/<feature>.md` with concrete File changes (graphify query in PLAN).
-5. **Execute:** Prefer a **new** chat for large work: run **project-manager** with the plan path → Code (plan-first) → Review (diff-first).
+4. **Plan:** Set chat to **Plan** mode, then run **feature-plan** or **apply-ticket** → `docs/plans/<feature>.md` (apply-ticket **defaults to PLAN-only**).
+5. **Execute:** **New chat:** `/project-manager docs/plans/<feature>.md` → Code (plan path + domain sections) → Review (diff-first).
 6. Resolve Critical rework via Plan (rework AC) → Code → Review until production ready.
 
 ## Stacks

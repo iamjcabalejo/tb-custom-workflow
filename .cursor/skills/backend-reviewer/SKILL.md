@@ -28,6 +28,8 @@ Single entry point for **reviewing backend** code in **Python (FastAPI)** or **C
 
 Assume nothing. Verify that the implementation matches the plan's acceptance criteria and adheres to the **correct project rules for each language** (see Language-specific rules below). Give specific, actionable feedback with file/line references—no vague suggestions.
 
+**Graphify:** Diff-first (`graphify.mdc` phase budget). Query only for dependency/blast radius.
+
 ## Language-specific rules and checklist
 
 ### Python (`.py`, admin-api-python)

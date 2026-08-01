@@ -6,7 +6,7 @@ description: Analyze task complexity and create actionable implementation plan
 
 Analyze the following task and create a clear, actionable implementation plan.
 
-**Graph-first:** Before exploring product repos for affected files/components, apply `.cursor/rules/graphify.mdc` and `.cursor/skills/graphify-navigation/SKILL.md`.
+**Graphify:** Follow `.cursor/rules/graphify.mdc` phase budget (PLAN/orient = required `query --budget 1500` before explore; write concrete file paths). Do not load the full `/graphify` skill for routine query.
 
 ## Task
 

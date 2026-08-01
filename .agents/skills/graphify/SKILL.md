@@ -1,6 +1,6 @@
 ---
 name: graphify
-description: "Use for any question about a codebase, its architecture, file relationships, or project content — especially when graphify-out/ exists, where the question should be treated as a graphify query first. Turns any input (code, docs, papers, images, videos) into a persistent knowledge graph with god nodes, community detection, and query/path/explain tools."
+description: "Build, update, wiki, or hook-install a Graphify knowledge graph (/graphify extract, --update, --wiki, hook). Do NOT use for routine codebase orientation—use graphify-navigation and CLI graphify query/path/explain with the phase budget in graphify.mdc instead."
 ---
 
 # /graphify

@@ -27,18 +27,18 @@ $ARGUMENTS
 
 ## Phase A: Code (implement)
 
-Spawn in this order. Pass the full plan (or relevant sections). Each subagent must follow `.cursor/rules/compounding-dev-cycle.mdc` Code phase.
+Spawn in this order. Pass **plan path** plus **domain sections only** (not the entire plan body, not Linear dumps). Each subagent must follow `.cursor/rules/compounding-dev-cycle.mdc` Code phase.
 
 **Mode:** Spawn all Code-phase agents in **Agent mode.**
 
 ### A1. Spawn `backend-architect`
 
-- **Pass**: Full plan, especially **Backend Tasks** and/or **C# Backend Tasks**, feature overview, technical design, file changes, API specs, database schema, dependencies and env. Optional: short graphify summary if you ran one.
+- **Pass**: Plan path; **Backend Tasks** and/or **C# Backend Tasks**; AC; File changes; technical design / API / schema slices that backend needs; deps/env. Optional: short graphify summary if you ran one.
 - **Instruct**: "Follow graphify.mdc phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all backend tasks from this feature plan per compounding-dev-cycle Code phase. **Automatically select language**: if the plan has **Backend tasks** (Python), use FastAPI, Pydantic, SQLAlchemy/asyncpg and follow python-backend.mdc, api-routes-python.mdc; if the plan has **C# Backend tasks**, use ASP.NET Core, EF Core or Dapper and follow csharp-backend.mdc, api-routes-csharp.mdc; if both, implement both. Create or modify the specified files. After edits, run `graphify update .` in each modified product root when the CLI is available. Produce handoff for Review/Test: implementation (code + project rules), tests for new behavior (pytest for Python, xUnit/NUnit for C#), implementation notes (what was done, deferred, assumptions, env/config). Link work to acceptance criteria (e.g. implements AC-1, AC-2). Do not expand scope. Return when complete."
 
 ### A2. Spawn `frontend-architect`
 
-- **Pass**: Full plan, especially **Frontend Tasks**, feature overview, API contract, component structure, file changes, dependencies. Optional: short graphify summary if you ran one.
+- **Pass**: Plan path; **Frontend Tasks**; AC; File changes; API contract; deps. Optional: short graphify summary if you ran one.
 - **Instruct**: "Follow graphify.mdc phase budget: **plan-first** (File changes); query only for gaps/blast radius. Implement all frontend tasks from this feature plan per compounding-dev-cycle Code phase. Use React, Ant Design, Jotai, TanStack Query as appropriate. Create or modify the specified files. Integrate with the backend API. After edits, run `graphify update .` in the frontend root when the CLI is available. Produce handoff for Review/Test: implementation, tests where relevant, implementation notes. Link work to acceptance criteria. Do not expand scope. Return when complete."
 
 After A1–A2: aggregate **Code → Review/Test handoff**: Code phase summary (backend, frontend), Implementation notes (by agent), Test status.
