@@ -1,3 +1,7 @@
+## git
+
+Never commit or push to the default branch (`main`, `master`, or `origin/HEAD`). Always create a **new** branch from default, commit there, push that branch only. `/commit-push` must not run `gh pr create`; emit copy-paste PR title and summary. Follow `.codex/rules/git-workflow.md` and `.codex/skills/git-commit-push/SKILL.md`.
+
 ## graphify
 
 Ticketboat multi-root workspace: each product repo may have its own `graphify-out/` with god nodes, communities, and cross-file edges.
