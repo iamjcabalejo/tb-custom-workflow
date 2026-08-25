@@ -73,6 +73,7 @@ flowchart TD
 | **code-cleanup** | — | Lint/format (ruff, black, mypy for Python; ESLint, Prettier for TS). |
 | **code-optimize** | — | Performance and structure (async, caching, bundle). |
 | **new-task** | — | Start a new task from a plan or ticket. |
+| **commit-push** | — | New branch from **default**, commit, push that branch only; copy-paste PR title/summary. Never push to `main`/default; does not create the GitHub PR. |
 
 ## Agents
 
@@ -89,12 +90,12 @@ One backend command covers both Python and C#; no separate backend agents per la
 
 ## Rules (summary)
 
-- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed), `compounding-dev-cycle.mdc`, `core-standards.mdc`, `graphify.mdc` (phase budget: PLAN / Code / Review).
+- **Always applied:** `token-policy.mdc` (refine → hand off, session budget, XML blueprints when needed), `compounding-dev-cycle.mdc`, `core-standards.mdc`, `graphify.mdc` (phase budget: PLAN / Code / Review), `git-workflow.mdc` (never commit/push to default; new PR branch only).
 - **Glob-based:** `python-backend.mdc` (`**/*.py`), `api-routes-python.mdc` (`**/api/**/*.py`), `csharp-backend.mdc` (`**/*.cs`), `api-routes-csharp.mdc` (`**/Controllers/**/*.cs`), `react-frontend.mdc` (`**/*.tsx`), `typescript.mdc` (`**/*.ts`).
 
 ## Skills
 
-Orchestration: `feature-planning`, `project-manager`, `agent-selection`, `graphify-navigation`.  
+Orchestration: `feature-planning`, `project-manager`, `agent-selection`, `graphify-navigation`, `git-commit-push`.  
 Graphify build: `graphify` (official `/graphify` skill).  
 Backend: `backend-architect`, `backend-reviewer` (both reference api-design-patterns, postgresql, security-audit, code-review; Python also api-testing).  
 Frontend: `frontend-architect`, `frontend-reviewer` (accessibility-checklist, performance-profiling, code-review).  
